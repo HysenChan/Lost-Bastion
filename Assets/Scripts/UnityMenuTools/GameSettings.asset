@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e9fc79d8d1f5d0d448495f5c0935febc, type: 3}
-  m_Name: UnityMenuTools
+  m_Name: GameSettings
   m_EditorClassIdentifier: 
   timeScale: 1
   framerate: 60
