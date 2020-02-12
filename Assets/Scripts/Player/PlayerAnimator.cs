@@ -8,14 +8,16 @@ public class PlayerAnimator : MonoBehaviour
 {
     [HideInInspector]
     public DIRECTION currentDirection;
-    public Animator animator;
-    private bool isPlayer;
 
     [Header("Effects")]
     public GameObject DustEffectLand;
     public GameObject DustEffectJump;
     public GameObject HitEffect;
     public GameObject DefendEffect;
+
+    [HideInInspector]
+    public Animator animator;
+    private bool isPlayer;
 
     private void Awake()
     {
