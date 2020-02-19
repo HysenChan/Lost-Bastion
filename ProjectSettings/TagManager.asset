@@ -13,19 +13,19 @@ TagManager:
   - UI
   - 
   - 
+  - Enemy
+  - Player
+  - Item
+  - Environment
+  - Projectile
+  - DestoryabelObject
+  - AreaCollider
+  - 
+  - 
+  - 
+  - 
+  - 
   - PostProcessing
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
   - 
   - 
   - 

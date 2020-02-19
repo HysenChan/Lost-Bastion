@@ -16,5 +16,26 @@ public class GameInit : MonoBehaviour
     private GameObject audioPlayer;
     private GameSettings settings;
 
-    
+    private void Awake()
+    {
+        //游戏设置
+        settings = Resources.Load("GameSettings", typeof(GameSettings)) as GameSettings;
+        if (settings!=null)
+        {
+            Time.timeScale = settings.timeScale;
+            Application.targetFrameRate = settings.framerate;
+        }
+
+        //开始游戏打开菜单
+        if (!string.IsNullOrEmpty(showMenuAtStart))
+        {
+            ShowStartMenu();
+        }
+    }
+
+    //开始游戏菜单
+    void ShowStartMenu()
+    {
+        
+    }
 }
