@@ -26,11 +26,17 @@ public class GameInit : MonoBehaviour
             Application.targetFrameRate = settings.framerate;
         }
 
-        //开始游戏打开菜单
-        if (!string.IsNullOrEmpty(showMenuAtStart))
+        //创建游戏摄像机
+        if (!GameObject.FindObjectOfType<CameraFollow>()&&createGameCamera)
         {
-            ShowStartMenu();
+            GameObject.Instantiate(Resources.Load("GameCamera"), Vector3.zero, Quaternion.identity);
         }
+
+        //开始游戏打开菜单
+        //if (!string.IsNullOrEmpty(showMenuAtStart))
+        //{
+        //    ShowStartMenu();
+        //}
     }
 
     //开始游戏菜单
