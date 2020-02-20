@@ -341,7 +341,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                newDir = Vector3.RotateTowards(transform.forward, Vector3.forward * (int)dir, jumpRotationSpeed * Time.deltaTime, 0.0f);
+                newDir = Vector3.RotateTowards(transform.forward, Vector3.forward * -(int)dir, jumpRotationSpeed * Time.deltaTime, 0.0f);
             }
 
             transform.rotation = Quaternion.LookRotation(newDir);
