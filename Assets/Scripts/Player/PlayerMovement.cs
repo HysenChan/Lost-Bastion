@@ -308,6 +308,25 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>
+    /// 设定当前方向
+    /// </summary>
+    /// <param name="dir"></param>
+    public void SetDirection(DIRECTION dir)
+    {
+        currentDirection = dir;
+        LookToDir(currentDirection);
+    }
+
+    /// <summary>
+    /// 返回当前方向
+    /// </summary>
+    /// <returns></returns>
+    public DIRECTION GetCurrentDirection()
+    {
+        return currentDirection;
+    }
+
+    /// <summary>
     /// 朝一个方向看
     /// </summary>
     /// <param name="dir">方向</param>
@@ -438,6 +457,28 @@ public class PlayerMovement : MonoBehaviour
             SetPlayerState(PlayerState.PLAYERSTATE.IDLE);
         }
     }
+
+    /// <summary>
+    /// 中断正在进行的跳跃
+    /// </summary>
+    public void CancelJump()
+    {
+        jumpInProgress = false;
+        StopAllCoroutines();
+    }
+
+    /// <summary>
+    /// 在统一编辑器中绘制前瞻球体
+    /// </summary>
+#if UNITY_EDITOR
+    void OnDrawGizmos()
+    {
+        var c = GetComponent<CapsuleCollider>();
+        Gizmos.color = Color.yellow;
+        Vector3 MovementOffset = new Vector3(inputDirection.x, 0, inputDirection.y) * lookAheadDistance;
+        Gizmos.DrawWireSphere(transform.position + Vector3.up * (c.radius + 0.1f) + -MovementOffset, c.radius);
+    }
+#endif
 }
 
 /// <summary>
