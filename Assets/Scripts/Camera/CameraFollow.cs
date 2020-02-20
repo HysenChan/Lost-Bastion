@@ -56,10 +56,10 @@ public class CameraFollow : MonoBehaviour
             Vector3 playerPos = target.transform.position;
 
             currentX = Mathf.Lerp(currentX, playerPos.x, DampX * Time.deltaTime);
-            currentY = Mathf.Lerp(currentY, playerPos.y, DampY * Time.deltaTime);
+            currentY = Mathf.Lerp(currentY, playerPos.y-heightOffset, DampY * Time.deltaTime);
             if (FollowZAxis)
             {
-                currentZ = Mathf.Lerp(currentZ, playerPos.z, DampZ * Time.deltaTime);
+                currentZ = Mathf.Lerp(currentZ, playerPos.z+distanceToTarget, DampZ * Time.deltaTime);
             }
             else
             {
