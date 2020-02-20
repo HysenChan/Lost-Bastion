@@ -40,6 +40,7 @@ public class InputManager : MonoBehaviour
     public delegate void CombatInputEventHandler(COMBATACTION action);
     public static event CombatInputEventHandler onCombatInputEvent;
 
+    //TODO:显示UI部分
     private void Start()
     {
 
@@ -76,6 +77,7 @@ public class InputManager : MonoBehaviour
     {
         //角色移动
         float x = 0f, y = 0f;
+
         if (Input.GetKey(Up))
         {
             y =1f;
