@@ -44,13 +44,13 @@ public class PlayerMovement : MonoBehaviour
     public bool playerInCameraView;//如果玩家在相机视图内，则为true
 
     //该组件可以影响的状态列表
-    private List<PlayerState.PLAYERSTATE> MovementStates = new List<PlayerState.PLAYERSTATE>()
+    private List<PLAYERSTATE> MovementStates = new List<PLAYERSTATE>()
     {
-        PlayerState.PLAYERSTATE.IDLE,
-        PlayerState.PLAYERSTATE.WALK,
-        PlayerState.PLAYERSTATE.JUMPING,
-        PlayerState.PLAYERSTATE.JUMPKICK,
-        PlayerState.PLAYERSTATE.LAND,
+        PLAYERSTATE.IDLE,
+        PLAYERSTATE.WALK,
+        PLAYERSTATE.JUMPING,
+        PLAYERSTATE.JUMPKICK,
+        PLAYERSTATE.LAND,
     };
 
     private void OnEnable()
@@ -116,7 +116,7 @@ public class PlayerMovement : MonoBehaviour
             //设置地面
             animator.SetAnimatorBool("isGrounded", isGrounded);
             //检查是否下落
-            animator.SetAnimatorBool("Falling", !isGrounded && rb.velocity.y < 0.1f && playerState.currentState != PlayerState.PLAYERSTATE.KNOCKDOWN);
+            animator.SetAnimatorBool("Falling", !isGrounded && rb.velocity.y < 0.1f && playerState.currentState != PLAYERSTATE.KNOCKDOWN);
             //更新方向
             animator.currentDirection = currentDirection;
         }
@@ -167,7 +167,7 @@ public class PlayerMovement : MonoBehaviour
     private void MoveGrounded()
     {
         //跳跃着陆时不能移动
-        if (playerState.currentState==PlayerState.PLAYERSTATE.LAND)
+        if (playerState.currentState==PLAYERSTATE.LAND)
         {
             return;
         }
@@ -176,12 +176,12 @@ public class PlayerMovement : MonoBehaviour
         if (rb!=null&&(inputDirection.sqrMagnitude>0)&&!WallInFront()&&PlayerInsideCamViewArea())
         {
             SetVelocity(new Vector3(inputDirection.x * -walkSpeed, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, inputDirection.y * -ZSpeed));
-            SetPlayerState(PlayerState.PLAYERSTATE.WALK);
+            SetPlayerState(PLAYERSTATE.WALK);
         }
         else
         {
             SetVelocity(new Vector3(0, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, 0));
-            SetPlayerState(PlayerState.PLAYERSTATE.IDLE);
+            SetPlayerState(PLAYERSTATE.IDLE);
         }
 
         //当玩家位于屏幕边缘时允许上/下移动，不允许左/右移动
@@ -253,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
     /// 设置玩家状态
     /// </summary>
     /// <param name="state"></param>
-    public void SetPlayerState(PlayerState.PLAYERSTATE state)
+    public void SetPlayerState(PLAYERSTATE state)
     {
         if (playerState!=null)
         {
@@ -388,7 +388,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (combatAction==InputManager.COMBATACTION.JUMP)
             {
-                if (playerState.currentState!=PlayerState.PLAYERSTATE.JUMPING&&IsGrounded())
+                if (playerState.currentState!=PLAYERSTATE.JUMPING&&IsGrounded())
                 {
                     StopAllCoroutines();
                     StartCoroutine(DoJump());
@@ -405,7 +405,7 @@ public class PlayerMovement : MonoBehaviour
     {
         //设置跳的状态
         jumpInProgress = true;
-        playerState.SetState(PlayerState.PLAYERSTATE.JUMPING);
+        playerState.SetState(PLAYERSTATE.JUMPING);
 
         //设置跳的条件
         animator.SetAnimatorBool("JumpInProgress", true);
@@ -436,7 +436,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         //跳起来着陆后
-        playerState.SetState(PlayerState.PLAYERSTATE.LAND);
+        playerState.SetState(PLAYERSTATE.LAND);
         SetVelocity(Vector3.zero);
         //着陆后的状态设置
         animator.SetAnimatorFloat("MovementSpeed", 0f);
@@ -451,10 +451,10 @@ public class PlayerMovement : MonoBehaviour
         jumpInProgress = false;
 
         //角色着陆后设置当前角色状态
-        if (playerState.currentState==PlayerState.PLAYERSTATE.LAND)
+        if (playerState.currentState==PLAYERSTATE.LAND)
         {
             yield return new WaitForSeconds(landRecoveryTime);
-            SetPlayerState(PlayerState.PLAYERSTATE.IDLE);
+            SetPlayerState(PLAYERSTATE.IDLE);
         }
     }
 
