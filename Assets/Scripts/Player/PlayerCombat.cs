@@ -103,6 +103,15 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        if (updateVelocity)
+        {
+            rb.velocity = fixedVelocity;
+            updateVelocity = false;
+        }
+    }
+
     /// <summary>
     /// 设置当前防御是否在防御状态
     /// </summary>
@@ -130,7 +139,12 @@ public class PlayerCombat : MonoBehaviour
             TurnToDir(currentDirection);
             //设置当前的速度为0
             SetVelocity(Vector3.zero);
-            //设置角色状态为空闲站立状态
+            //设置角色状态为防御状态
+            playerState.SetState(PLAYERSTATE.DEFEND);
+        }
+        else
+        {
+            //当角色不处于防御状态时，则切换为站立状态
             playerState.SetState(PLAYERSTATE.IDLE);
         }
     }
