@@ -73,7 +73,7 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ShowDustEffectJump()
     {
-        GameObject.Instantiate(DustEffectJump, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+        //GameObject.Instantiate(DustEffectJump, transform.position + Vector3.up * 0.13f, Quaternion.identity);
     }
 
     /// <summary>
@@ -81,6 +81,6 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ShowDustEffectLand()
     {
-        GameObject.Instantiate(DustEffectLand, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+        //GameObject.Instantiate(DustEffectLand, transform.position + Vector3.up * 0.13f, Quaternion.identity);
     }
 }
