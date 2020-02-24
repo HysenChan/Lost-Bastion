@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    //战斗类型
-    public enum COMBATACTION
-    {
-        NONE,
-        PUNCH,
-        KICK,
-        JUMP,
-        DEFEND,
-        WEAPONATTACK,
-    };
-
     //判断是否为键盘输入，方便后期扩展
     public bool UseKeyboardInput;
 
@@ -121,3 +110,14 @@ public class InputManager : MonoBehaviour
         return defendKeyDown;
     }
 }
+
+//战斗类型
+public enum COMBATACTION
+{
+    NONE,
+    PUNCH,
+    KICK,
+    JUMP,
+    DEFEND,
+    WEAPONATTACK,
+};
