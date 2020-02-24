@@ -382,11 +382,11 @@ public class PlayerMovement : MonoBehaviour
     /// 战斗的输入事件
     /// </summary>
     /// <param name="combatAction">输入的战斗状态</param>
-    private void CombatInputEvent(InputManager.COMBATACTION combatAction)
+    private void CombatInputEvent(INPUTACTION combatAction)
     {
         if (MovementStates.Contains(playerState.currentState)&&!isDead)
         {
-            if (combatAction==InputManager.COMBATACTION.JUMP)
+            if (combatAction==INPUTACTION.JUMP)
             {
                 if (playerState.currentState!=PLAYERSTATE.JUMPING&&IsGrounded())
                 {
