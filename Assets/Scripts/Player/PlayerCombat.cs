@@ -15,6 +15,7 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("Setting")]
     public bool canTurnWhileDefending;  //当在防御的时候能不能转身
+    public bool comboContinueOnHit = true;//仅在前一次攻击被击中时才继续使用连击
 
     [Header("States")]
     public DIRECTION currentDirection;//当前角色的朝向
@@ -35,6 +36,9 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("Attack Data & Combos")]
     private int attackNum = -1;//当前攻击组合编号
+
+    [SerializeField]
+    private bool targetHit; //如果最后一次击中目标，则为true
 
     private int EnemyLayer;//敌人的层级
     private int DestroyableObjectLayer;//破坏对象的层级
@@ -216,14 +220,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (AttackStates.Contains(playerState.currentState)&&!isDead)
         {
-            ////捡起武器
-            ////TODO:当前无加入是否存在武器
-            //if (action==INPUTACTION.PUNCH&&itemInRange!=null&&isGrounded)
-            //{
-            //    interactWithItem();
-            //}
-
-            //默认攻击
+            //默认拳击
             if (action==INPUTACTION.PUNCH&&playerState.currentState!=PLAYERSTATE.PUNCH&&playerState.currentState!=PLAYERSTATE.KICK&&isGrounded)
             {
                 //如果时间在组合窗口内，则继续进行下一次攻击
@@ -289,9 +286,14 @@ public class PlayerCombat : MonoBehaviour
     /// </summary>
     public void Ready()
     {
-        //TODO:当我们碰到东西时才继续连击
+        //当角色碰到东西时才继续连击
+        if (comboContinueOnHit&&!targetHit)
+        {
+            continuePunchCombo = continuePunchCombo = false;
+            lastAttackTime = 0;
+        }
 
-        //继续拳击
+        //连续拳击
         if (continuePunchCombo)
         {
             continuePunchCombo = continueKickCombo = false;
@@ -306,6 +308,25 @@ public class PlayerCombat : MonoBehaviour
             if (PunchCombo[attackNum]!=null&&PunchCombo[attackNum].animTrigger.Length>0)
             {
                 DoAttack(PunchCombo[attackNum], PLAYERSTATE.PUNCH, INPUTACTION.PUNCH);
+            }
+            return;
+        }
+
+        //连续脚踢
+        if (continueKickCombo)
+        {
+            continueKickCombo = continuePunchCombo = false;
+            if (attackNum<KickCombo.Length-1)
+            {
+                attackNum += 1;
+            }
+            else
+            {
+                attackNum = 0;
+            }
+            if (KickCombo[attackNum]!=null&&PunchCombo[attackNum].animTrigger.Length>0)
+            {
+                DoAttack(PunchCombo[attackNum], PLAYERSTATE.KICK, INPUTACTION.KICK);
             }
             return;
         }
