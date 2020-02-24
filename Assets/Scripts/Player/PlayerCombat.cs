@@ -18,6 +18,23 @@ public class PlayerCombat : MonoBehaviour
 
     [Header("States")]
     public DIRECTION currentDirection;//当前角色的朝向
+    public GameObject itemInRange;//当前处于可交互范围内的项目
+    private float lastAttackTime = 0;//上次攻击时间
+    private bool continuePunchCombo;//如果需要继续拳击，则为true
+    private bool continueKickCombo;//如果需要继续脚踢，则为true
+    private INPUTACTION lastAttackInput;
+    private DIRECTION lastAttackDirection;
+
+    [Header("GameObject")]
+    public DamageObject[] PunchCombo; //拳头攻击列表
+    public DamageObject[] KickCombo; //脚踢攻击列表
+    public DamageObject GroundPunchData; //拳击数据
+    public DamageObject GroundKickData; //脚踢数据
+    public DamageObject JumpKickData; //跳踢攻击数据
+    private DamageObject lastAttack;//来自最近一次攻击的数据
+
+    [Header("Attack Data & Combos")]
+    private int attackNum = -1;//当前攻击组合编号
 
     private int EnemyLayer;//敌人的层级
     private int DestroyableObjectLayer;//破坏对象的层级
@@ -61,6 +78,16 @@ public class PlayerCombat : MonoBehaviour
         PLAYERSTATE.DEFEND,
         PLAYERSTATE.WALK,
     };
+
+    private void OnEnable()
+    {
+        InputManager.onCombatInputEvent += CombatInputEvent;
+    }
+
+    private void OnDisable()
+    {
+        InputManager.onCombatInputEvent -= CombatInputEvent;
+    }
 
     private void Start()
     {
@@ -109,6 +136,17 @@ public class PlayerCombat : MonoBehaviour
         {
             rb.velocity = fixedVelocity;
             updateVelocity = false;
+        }
+    }
+
+    private void LateUpdate()
+    {
+        //将任何根运动偏移量应用于父级
+        if (playerAnimator&&playerAnimator.GetComponent<Animator>().applyRootMotion&&playerAnimator.transform.localPosition!=Vector3.zero)
+        {
+            Vector3 offset = playerAnimator.transform.localPosition;
+            playerAnimator.transform.localPosition = Vector3.zero;
+            transform.position += offset * -(int)currentDirection;
         }
     }
 
@@ -166,5 +204,112 @@ public class PlayerCombat : MonoBehaviour
     {
         fixedVelocity = velocity;
         updateVelocity = true;
+    }
+
+    #region 攻击输入相关
+    
+    /// <summary>
+    /// 攻击事件
+    /// </summary>
+    /// <param name="action"></param>
+    private void CombatInputEvent(INPUTACTION action)
+    {
+        if (AttackStates.Contains(playerState.currentState)&&!isDead)
+        {
+            ////捡起武器
+            ////TODO:当前无加入是否存在武器
+            //if (action==INPUTACTION.PUNCH&&itemInRange!=null&&isGrounded)
+            //{
+            //    interactWithItem();
+            //}
+
+            //默认攻击
+            if (action==INPUTACTION.PUNCH&&playerState.currentState!=PLAYERSTATE.PUNCH&&playerState.currentState!=PLAYERSTATE.KICK&&isGrounded)
+            {
+                //如果时间在组合窗口内，则继续进行下一次攻击
+                bool insideComboWindow = (lastAttack != null && (Time.time < (lastAttackTime + lastAttack.duration + lastAttack.comboResetTime)));
+                if (insideComboWindow&&!continuePunchCombo&&(attackNum<KickCombo.Length-1))
+                {
+                    attackNum += 1;
+                }
+                else
+                {
+                    attackNum = 0;
+                }
+
+                if (PunchCombo[attackNum]!=null&&PunchCombo[attackNum].animTrigger.Length>0)
+                {
+                    DoAttack(PunchCombo[attackNum], PLAYERSTATE.PUNCH, INPUTACTION.PUNCH);
+                }
+            }
+        }
+    }
+
+    #endregion
+
+    #region 攻击方法
+
+    private void DoAttack(DamageObject damage,PLAYERSTATE state,INPUTACTION inputAction)
+    {
+        playerAnimator.SetAnimatorTrigger(damage.animTrigger);
+        playerState.SetState(state);
+        lastAttack = damage;
+        lastAttack.inflictor = gameObject;
+        lastAttackTime = Time.time;
+        lastAttackInput = inputAction;
+        lastAttackDirection = currentDirection;
+        TurnToDir(currentDirection);
+        SetVelocity(Vector3.zero);
+        if (state==PLAYERSTATE.JUMPKICK)
+            return;
+        Invoke("Ready", damage.duration);
+    }
+
+    #endregion
+
+    #region 物品交互
+
+    public void interactWithItem()
+    {
+        if (itemInRange!=null)
+        {
+            playerAnimator.SetAnimatorTrigger("Pickup");
+            playerState.SetState(PLAYERSTATE.PICKUPITEM);
+            SetVelocity(Vector3.zero);
+            //TODO:执行Ready方法和PickUpItem方法
+            Invoke("Ready", 0.3f);
+            Invoke("pickupItem", 0.2f);
+        }
+    }
+
+    #endregion
+
+    /// <summary>
+    /// 攻击已完成，玩家已准备好采取新动作
+    /// </summary>
+    public void Ready()
+    {
+        //TODO:当我们碰到东西时才继续连击
+
+        //继续拳击
+        if (continuePunchCombo)
+        {
+            continuePunchCombo = continueKickCombo = false;
+            if (attackNum<PunchCombo.Length-1)
+            {
+                attackNum += 1;
+            }
+            else
+            {
+                attackNum = 0;
+            }
+            if (PunchCombo[attackNum]!=null&&PunchCombo[attackNum].animTrigger.Length>0)
+            {
+                DoAttack(PunchCombo[attackNum], PLAYERSTATE.PUNCH, INPUTACTION.PUNCH);
+            }
+            return;
+        }
+
+        playerState.SetState(PLAYERSTATE.IDLE);
     }
 }
