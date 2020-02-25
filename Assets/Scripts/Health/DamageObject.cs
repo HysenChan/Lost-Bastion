@@ -5,11 +5,12 @@ using UnityEngine;
 [System.Serializable]
 public class DamageObject
 {
-    //TODO:伤害
     public int damage;
     public string animTrigger = "";
     public float duration = 1f;
     public float comboResetTime = 0.5f;//攻击重置事件为0.5s
+    public string hitSFX = "";
+    //TODO:被击倒之类
 
     [Header("Hit Collider Settings")]
     public float CollSize;

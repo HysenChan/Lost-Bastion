@@ -30,6 +30,9 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField]
     private bool targetHit; //如果最后一次击中目标，则为true
 
+    [Header("Attack Data & Combos")]
+    public float hitZRange = 2;//z轴的攻击范围
+
     [Header("GameObject")]
     public DamageObject[] PunchCombo; //拳头攻击列表
     public DamageObject[] KickCombo; //脚踢攻击列表
@@ -37,9 +40,6 @@ public class PlayerCombat : MonoBehaviour
     public DamageObject GroundKickData; //脚踢数据
     public DamageObject JumpKickData; //跳踢攻击数据
     private DamageObject lastAttack;//来自最近一次攻击的数据
-
-    [Header("Attack Data & Combos")]
-    public float hitZRange = 2;//z轴的攻击范围
 
     private int EnemyLayer;//敌人的层级
     private int DestroyableObjectLayer;//破坏对象的层级
