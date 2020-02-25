@@ -11,6 +11,11 @@ public class DamageObject
     public float duration = 1f;
     public float comboResetTime = 0.5f;//攻击重置事件为0.5s
 
+    [Header("Hit Collider Settings")]
+    public float CollSize;
+    public float collDistance;
+    public float collHeight;
+
     [HideInInspector]
     public GameObject inflictor;
 

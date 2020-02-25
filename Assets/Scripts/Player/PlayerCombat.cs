@@ -8,6 +8,8 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     [Header("Linked Components")]
+    public Transform weaponBone; //将武器作为骨骼的Parents
+
     private PlayerAnimator playerAnimator;//拿到动画制作器组件
     private PlayerState playerState;//拿到玩家的状态
     private Rigidbody rb;//拿到刚体
@@ -25,6 +27,8 @@ public class PlayerCombat : MonoBehaviour
     private bool continueKickCombo;//如果需要继续脚踢，则为true
     private INPUTACTION lastAttackInput;
     private DIRECTION lastAttackDirection;
+    [SerializeField]
+    private bool targetHit; //如果最后一次击中目标，则为true
 
     [Header("GameObject")]
     public DamageObject[] PunchCombo; //拳头攻击列表
@@ -35,10 +39,7 @@ public class PlayerCombat : MonoBehaviour
     private DamageObject lastAttack;//来自最近一次攻击的数据
 
     [Header("Attack Data & Combos")]
-    private int attackNum = -1;//当前攻击组合编号
-
-    [SerializeField]
-    private bool targetHit; //如果最后一次击中目标，则为true
+    public float hitZRange = 2;//z轴的攻击范围
 
     private int EnemyLayer;//敌人的层级
     private int DestroyableObjectLayer;//破坏对象的层级
@@ -48,6 +49,7 @@ public class PlayerCombat : MonoBehaviour
     private bool isDead = false;
     private Vector3 fixedVelocity;
     private bool updateVelocity;
+    private int attackNum = -1;//当前攻击组合编号
 
     //玩家可以攻击的状态列表
     private List<PLAYERSTATE> AttackStates = new List<PLAYERSTATE>()
@@ -239,6 +241,34 @@ public class PlayerCombat : MonoBehaviour
                     DoAttack(PunchCombo[attackNum], PLAYERSTATE.PUNCH, INPUTACTION.PUNCH);
                 }
             }
+
+            //默认脚踢
+            if (action==INPUTACTION.KICK&&playerState.currentState!=PLAYERSTATE.KICK&&playerState.currentState!=PLAYERSTATE.PUNCH&&isGrounded)
+            {
+                bool insideComboWindow = (lastAttack != null && (Time.time < (lastAttackTime + lastAttack.duration + lastAttack.comboResetTime)));
+                if (insideComboWindow&&!continueKickCombo&&(attackNum<KickCombo.Length-1))
+                {
+                    attackNum += 1;
+                }
+                else
+                {
+                    attackNum = 0;
+                }
+
+                DoAttack(KickCombo[attackNum], PLAYERSTATE.KICK, INPUTACTION.KICK);
+                return;
+            }
+
+            //跳踢
+            if (action==INPUTACTION.KICK&&!isGrounded)
+            {
+                if (JumpKickData.animTrigger.Length>0)
+                {
+                    DoAttack(JumpKickData, PLAYERSTATE.JUMPKICK, INPUTACTION.KICK);
+                    StartCoroutine(JumpKickInProgress());
+                }
+                return;
+            }
         }
     }
 
@@ -332,5 +362,53 @@ public class PlayerCombat : MonoBehaviour
         }
 
         playerState.SetState(PLAYERSTATE.IDLE);
+    }
+
+    /// <summary>
+    /// 进行跳踢
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator JumpKickInProgress()
+    {
+        playerAnimator.SetAnimatorBool("JumpKickActive", true);
+
+        //击中的敌人列表
+        List<GameObject> enemiesHit = new List<GameObject>();
+
+        //延迟0.1s，让动画有时间播放
+        yield return new WaitForSeconds(0.1f);
+
+        //检查是否击中
+        while (playerState.currentState==PLAYERSTATE.JUMPKICK)
+        {
+            //在角色前面绘制一个击中框，以查看与之碰撞的对象
+            Vector3 boxPosition = transform.position + (Vector3.up * lastAttack.collHeight) + Vector3.right * ((int)currentDirection * lastAttack.collDistance);
+            Vector3 boxSize = new Vector3(lastAttack.CollSize / 2, lastAttack.CollSize / 2, hitZRange / 2);
+            Collider[] hitColliders = Physics.OverlapBox(boxPosition, boxSize, Quaternion.identity, HitLayerMask);
+
+            //通过将敌人添加到敌人列表中只击中一次
+            foreach (Collider col in hitColliders)
+            {
+                if (!enemiesHit.Contains(col.gameObject))
+                {
+                    enemiesHit.Add(col.gameObject);
+
+                    //攻击一个对象
+                    IDamagable<DamageObject> damagableObject = col.GetComponent(typeof(IDamagable<DamageObject>)) as IDamagable<DamageObject>;
+                    if (damagableObject!=null)
+                    {
+                        damagableObject.Hit(lastAttack);
+
+                        //摄像机抖动
+                        CameraShake camShake = Camera.main.GetComponent<CameraShake>();
+                        if (camShake!=null)
+                        {
+                            camShake.Shake(0.1f);
+                        }
+                    }
+                }
+            }
+            yield return null;
+        }
     }
 }
