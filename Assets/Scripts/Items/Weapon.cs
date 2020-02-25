@@ -5,6 +5,9 @@ using UnityEngine;
 [System.Serializable]
 public class Weapon
 {
+    public GameObject playerHandPrefab;//玩家手的预制体
+    public GameObject WeaponEndState; // 视觉上代表该武器最终状态的游戏对象（例如，破损的球杆或空枪）
+
     public int timesToUse = 1;//使用武器的时间
     public DamageObject damageObject;
     [Header("Sound Effects")]
@@ -12,8 +15,6 @@ public class Weapon
     public string breakSound = "";
 
     public WEAPONDAMAGETYPE damageType;//选择此武器是在使用时还是在击中时损毁（例如枪在使用时损毁，球杆在击中时损毁）
-    public GameObject WeaponEndState; // 视觉上代表该武器最终状态的游戏对象（例如，破损的球杆或空枪）
-    public GameObject playerHandPrefab;//玩家手的预制体
 
     /// <summary>
     /// 使用武器

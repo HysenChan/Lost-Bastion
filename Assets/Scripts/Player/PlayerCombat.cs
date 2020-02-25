@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerCombat : MonoBehaviour
 {
     [Header("Linked Components")]
-    public Transform weaponBone; //将武器作为骨骼的Parents
+    public Transform weaponBone; //将武器作为骨骼的Parents(手掌)
 
     private PlayerAnimator playerAnimator;//拿到动画制作器组件
     private PlayerState playerState;//拿到玩家的状态
@@ -18,10 +18,13 @@ public class PlayerCombat : MonoBehaviour
     [Header("Setting")]
     public bool canTurnWhileDefending;  //当在防御的时候能不能转身
     public bool comboContinueOnHit = true;//仅在前一次攻击被击中时才继续使用连击
+    public float GroundAttackDistance = 1.5f;//距敌人可进行地面攻击的距离
+    public bool resetComboChainOnChangeCombo; //切换到其他组合链时重新启动组合
 
     [Header("States")]
     public DIRECTION currentDirection;//当前角色的朝向
-    public GameObject itemInRange;//当前处于可交互范围内的项目
+    public GameObject itemInRange;//当前处于可交互范围内的物品
+    private Weapon currentWeapon;//玩家当前使用的武器
     private float lastAttackTime = 0;//上次攻击时间
     private bool continuePunchCombo;//如果需要继续拳击，则为true
     private bool continueKickCombo;//如果需要继续脚踢，则为true
@@ -269,6 +272,68 @@ public class PlayerCombat : MonoBehaviour
                 }
                 return;
             }
+
+            //捡起物品
+            if (action==INPUTACTION.PUNCH&&itemInRange!=null&&isGrounded&&currentWeapon==null)
+            {
+                InteractWithItem();
+                return;
+            }
+
+            //使用武器
+            if (action==INPUTACTION.PUNCH&&isGrounded&&currentWeapon!=null)
+            {
+                UseCurrentWeapon();
+                return;
+            }
+
+            //如果在拳头攻击中已按下，则进行组合打击
+            if (action==INPUTACTION.PUNCH&&(playerState.currentState==PLAYERSTATE.PUNCH)&&!continuePunchCombo&&isGrounded)
+            {
+                if (attackNum<PunchCombo.Length-1)
+                {
+                    continuePunchCombo = true;
+                    continueKickCombo = false;
+                    return;
+                }
+            }
+
+            //如果在脚踢攻击中已按下，则进行组合打击
+            if (action == INPUTACTION.KICK && (playerState.currentState == PLAYERSTATE.KICK) && !continueKickCombo && isGrounded)
+            {
+                if (attackNum < KickCombo.Length - 1)
+                {
+                    continueKickCombo = true;
+                    continuePunchCombo = false;
+                    return;
+                }
+            }
+
+            //敌人倒地地面拳击
+            if (action == INPUTACTION.PUNCH && (playerState.currentState != PLAYERSTATE.PUNCH && NearbyEnemyDown()) && isGrounded)
+            {
+                if (GroundPunchData.animTrigger.Length > 0)
+                {
+                    DoAttack(GroundPunchData, PLAYERSTATE.GROUNDPUNCH, INPUTACTION.PUNCH);
+                }
+                return;
+            }
+
+            //敌人倒地地面脚踢
+            if (action == INPUTACTION.KICK && (playerState.currentState != PLAYERSTATE.KICK && NearbyEnemyDown()) && isGrounded)
+            {
+                if (GroundKickData.animTrigger.Length > 0)
+                {
+                    DoAttack(GroundKickData, PLAYERSTATE.GROUNDKICK, INPUTACTION.KICK);
+                }
+                return;
+            }
+
+            //切换到另一个组合链时重置组合（用户设置）
+            if (resetComboChainOnChangeCombo&&(action!=lastAttackInput))
+            {
+                attackNum = -1;
+            }
         }
     }
 
@@ -292,20 +357,130 @@ public class PlayerCombat : MonoBehaviour
         Invoke("Ready", damage.duration);
     }
 
+    /// <summary>
+    /// 使用目前装备的武器
+    /// </summary>
+    private void UseCurrentWeapon()
+    {
+        playerState.SetState(PLAYERSTATE.USEWEAPON);
+        TurnToDir(currentDirection);
+        SetVelocity(Vector3.zero);
+
+        lastAttackInput = INPUTACTION.WEAPONATTACK;
+        lastAttackTime = Time.time;
+        lastAttack = currentWeapon.damageObject;
+        lastAttack.inflictor = gameObject;
+        lastAttackDirection = currentDirection;
+
+        if (!string.IsNullOrEmpty(currentWeapon.damageObject.animTrigger))
+        {
+            playerAnimator.SetAnimatorTrigger(currentWeapon.damageObject.animTrigger);
+        }
+        //TODO:音效
+        if (!string.IsNullOrEmpty(currentWeapon.useSound))
+        {
+
+        }
+        Invoke("Ready", currentWeapon.damageObject.duration);
+        if (currentWeapon.damageType==WEAPONDAMAGETYPE.WEAPONONUSE)
+        {
+            currentWeapon.UseWeapon();
+        }
+
+        //上一次使用
+        if (currentWeapon.damageType==WEAPONDAMAGETYPE.WEAPONONUSE&&currentWeapon.timesToUse==0)
+        {
+            StartCoroutine(DestroyCurrentWeapon(currentWeapon.damageObject.duration));
+        }
+        if (currentWeapon.damageType == WEAPONDAMAGETYPE.WEAPONONHIT && currentWeapon.timesToUse == 1)
+        {
+            StartCoroutine(DestroyCurrentWeapon(currentWeapon.damageObject.duration));
+        }
+    }
+
+    /// <summary>
+    /// 移除当前武器
+    /// </summary>
+    /// <param name="delay"></param>
+    /// <returns></returns>
+    IEnumerator DestroyCurrentWeapon(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        //TODO:音效
+        if (currentWeapon.damageType==WEAPONDAMAGETYPE.WEAPONONUSE)
+        {
+
+        }
+        Destroy(currentWeapon.playerHandPrefab);
+        currentWeapon.BreakWeapon();
+        currentWeapon = null;
+    }
+
     #endregion
 
     #region 物品交互
 
-    public void interactWithItem()
+    /// <summary>
+    /// 物品在交互范围内
+    /// </summary>
+    /// <param name="item"></param>
+    public void ItemInRange(GameObject item)
+    {
+        itemInRange = item;
+    }
+
+    /// <summary>
+    /// 物品不在交互范围内
+    /// </summary>
+    /// <param name="item"></param>
+    public void ItemOutOfRange(GameObject item)
+    {
+        if (itemInRange==item)
+        {
+            itemInRange = null;
+        }
+    }
+
+    /// <summary>
+    /// 与范围内的物品互动
+    /// </summary>
+    public void InteractWithItem()
     {
         if (itemInRange!=null)
         {
             playerAnimator.SetAnimatorTrigger("Pickup");
             playerState.SetState(PLAYERSTATE.PICKUPITEM);
             SetVelocity(Vector3.zero);
-            //TODO:执行Ready方法和PickUpItem方法
             Invoke("Ready", 0.3f);
-            Invoke("pickupItem", 0.2f);
+            Invoke("PickupItem", 0.2f);
+        }
+    }
+
+    /// <summary>
+    /// 捡起物品
+    /// </summary>
+    void PickupItem()
+    {
+        if (itemInRange!=null)
+        {
+            itemInRange.SendMessage("OnPickUp", gameObject, SendMessageOptions.DontRequireReceiver);
+        }
+    }
+
+    /// <summary>
+    /// 装备当前武器
+    /// </summary>
+    /// <param name="weapon"></param>
+    public void EquipWeapon(Weapon weapon)
+    {
+        currentWeapon = weapon;
+        currentWeapon.damageObject.inflictor = gameObject;
+
+        //添加武器到玩家手中
+        if (weapon.playerHandPrefab!=null)
+        {
+            GameObject playerWeapon = GameObject.Instantiate(weapon.playerHandPrefab, weaponBone) as GameObject;
+            currentWeapon.playerHandPrefab = playerWeapon;
         }
     }
 
@@ -410,5 +585,82 @@ public class PlayerCombat : MonoBehaviour
             }
             yield return null;
         }
+    }
+
+    /// <summary>
+    /// 如果最近的敌人处于击倒状态，则返回true
+    /// </summary>
+    /// <returns></returns>
+    bool NearbyEnemyDown()
+    {
+        float distance = GroundAttackDistance;
+        GameObject closestEnemy = null;
+        //TODO:敌人处于击倒状态
+        return false;
+    }
+
+    /// <summary>
+    /// 如果玩家面对的是游戏对象，则返回true
+    /// </summary>
+    /// <param name="go"></param>
+    /// <returns></returns>
+    public bool IsFacingTarget(GameObject go)
+    {
+        return ((go.transform.position.x > transform.position.x && currentDirection == DIRECTION.Left) || (go.transform.position.x < transform.position.x && currentDirection == DIRECTION.Right));
+    }
+
+    /// <summary>
+    /// 判断是否为地面
+    /// </summary>
+    /// <returns></returns>
+    public bool IsGrounded()
+    {
+        CapsuleCollider capsuleCollider = GetComponent<CapsuleCollider>();
+        float colliderSize = capsuleCollider.bounds.extents.y;
+#if UNITY_EDITOR
+        Debug.DrawRay(transform.position + capsuleCollider.center, Vector3.down * colliderSize, Color.red);
+#endif
+        return Physics.Raycast(transform.position + capsuleCollider.center, Vector3.down, colliderSize + 0.1f, 1 << EnvironmentLayer);
+    }
+
+    /// <summary>
+    /// 返回当前武器
+    /// </summary>
+    /// <returns></returns>
+    public Weapon GetCurrentWeapon()
+    {
+        return currentWeapon;
+    }
+
+    /// <summary>
+    /// 玩家死亡
+    /// </summary>
+    private void Death()
+    {
+        if (!isDead)
+        {
+            isDead = true;
+            StopAllCoroutines();
+            playerAnimator.StopAllCoroutines();
+            CancelInvoke();
+            SetVelocity(Vector3.zero);
+            //TODO:死亡音乐
+            playerAnimator.SetAnimatorBool("Death", true);
+            //TODO:敌人管理
+            StartCoroutine(ReStartLevel());
+        }
+    }
+
+    /// <summary>
+    /// 关卡重来
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator ReStartLevel()
+    {
+        yield return new WaitForSeconds(2);
+        float fadeoutTime = 1.3f;
+
+        //TODO:UI管理
+
     }
 }
