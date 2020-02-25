@@ -13,7 +13,7 @@ public class WeaponPickup : MonoBehaviour
     [Header("Pickup Settings")]
     public string SFX = "";
     public GameObject pickupEffect;
-    public float pickupRange=1;
+    public float pickupRange = 1;
 
     private void Start()
     {
@@ -29,7 +29,7 @@ public class WeaponPickup : MonoBehaviour
                 float distanceToPlayer = Vector3.Distance(player.transform.position, transform.position);
 
                 //物品是否在角色交互范围内
-                if (distanceToPlayer<pickupRange&&playerInRange==null)
+                if (distanceToPlayer < pickupRange && playerInRange == null)
                 {
                     playerInRange = player;
                     player.SendMessage("ItemInRange", gameObject, SendMessageOptions.DontRequireReceiver);
@@ -37,7 +37,7 @@ public class WeaponPickup : MonoBehaviour
                 }
 
                 //物品超出角色交互范围
-                if (distanceToPlayer>pickupRange&&playerInRange!=null)
+                if (distanceToPlayer > pickupRange && playerInRange != null)
                 {
                     player.SendMessage("ItemOutRange", gameObject, SendMessageOptions.DontRequireReceiver);
                     playerInRange = null;
@@ -58,7 +58,7 @@ public class WeaponPickup : MonoBehaviour
         //TODO:声音
         if (SFX != null)
         {
-            
+
         }
 
         //武器装扮到玩家手上
@@ -66,7 +66,7 @@ public class WeaponPickup : MonoBehaviour
 
         //移除
         Destroy(gameObject);
-        
+
     }
 
     public void GiveWeaponToPlayer(GameObject player)

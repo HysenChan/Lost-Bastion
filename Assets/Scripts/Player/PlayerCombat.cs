@@ -463,7 +463,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (itemInRange!=null)
         {
-            itemInRange.SendMessage("OnPickUp", gameObject, SendMessageOptions.DontRequireReceiver);
+            itemInRange.SendMessage("OnPickup", gameObject, SendMessageOptions.DontRequireReceiver);
         }
     }
 
@@ -481,6 +481,49 @@ public class PlayerCombat : MonoBehaviour
         {
             GameObject playerWeapon = GameObject.Instantiate(weapon.playerHandPrefab, weaponBone) as GameObject;
             currentWeapon.playerHandPrefab = playerWeapon;
+        }
+    }
+
+    #endregion
+
+    #region 检查是否击中
+
+    /// <summary>
+    /// 检查我们是否碰了点东西（动画事件）
+    /// </summary>
+    public void CheckForHit()
+    {
+        //在角色前面绘制一个点击框，以查看与之碰撞的对象
+        Vector3 boxPosition = transform.position + (Vector3.up * lastAttack.collHeight) + Vector3.right * ((int)lastAttackDirection * lastAttack.collDistance);
+        Vector3 boxSize = new Vector3(lastAttack.CollSize / 2, lastAttack.CollSize / 2, hitZRange / 2);
+        Collider[] hitColliders = Physics.OverlapBox(boxPosition, boxSize, Quaternion.identity, HitLayerMask);
+
+        int i = 0;
+        while (i < hitColliders.Length)
+        {
+
+            //击中一个损坏的物体
+            IDamagable<DamageObject> damagableObject = hitColliders[i].GetComponent(typeof(IDamagable<DamageObject>)) as IDamagable<DamageObject>;
+            if (damagableObject != null)
+            {
+                damagableObject.Hit(lastAttack);
+
+                //击中了物体，返回true
+                targetHit = true;
+            }
+            i++;
+        }
+
+        //武器击中
+        if (lastAttackInput==INPUTACTION.WEAPONATTACK&&targetHit)
+        {
+            currentWeapon.OnHitSomething();
+        }
+
+        //什么都没击中
+        if (hitColliders.Length==0)
+        {
+            targetHit = false;
         }
     }
 
