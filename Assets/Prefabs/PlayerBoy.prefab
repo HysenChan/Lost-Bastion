@@ -4385,8 +4385,8 @@ MonoBehaviour:
   CollisionLayer:
     serializedVersion: 2
     m_Bits: 2048
-  jumpUpVoice: 
-  jumpLandVoice: 
+  jumpUpVoice: PlayerJump
+  jumpLandVoice: PlayerLand
   currentDirection: -1
   inputDirection: {x: 0, y: 0}
   jumpInProgress: 0
@@ -4409,7 +4409,7 @@ MonoBehaviour:
   comboContinueOnHit: 1
   GroundAttackDistance: 1.4
   resetComboChainOnChangeCombo: 0
-  currentDirection: 0
+  currentDirection: -1
   itemInRange: {fileID: 0}
   targetHit: 0
   hitZRange: 2.2
