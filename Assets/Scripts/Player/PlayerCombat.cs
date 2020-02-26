@@ -91,11 +91,13 @@ public class PlayerCombat : MonoBehaviour
     private void OnEnable()
     {
         InputManager.onCombatInputEvent += CombatInputEvent;
+        InputManager.onMoveInputEvent += MovementInputEvent;
     }
 
     private void OnDisable()
     {
         InputManager.onCombatInputEvent -= CombatInputEvent;
+        InputManager.onMoveInputEvent -= MovementInputEvent;
     }
 
     private void Start()
@@ -213,6 +215,19 @@ public class PlayerCombat : MonoBehaviour
     {
         fixedVelocity = velocity;
         updateVelocity = true;
+    }
+
+    /// <summary>
+    /// 移动事件
+    /// </summary>
+    /// <param name="inputVector"></param>
+    private void MovementInputEvent(Vector2 inputVector)
+    {
+        int dir = Mathf.RoundToInt(Mathf.Sign((float)-inputVector.x));
+        if (Mathf.Abs(inputVector.x)>0)
+        {
+            currentDirection = (DIRECTION)dir;
+        }
     }
 
     #region 攻击输入相关
