@@ -60,11 +60,35 @@ public class PlayerAnimator : MonoBehaviour
     {
         if (isPlayer)
         {
-            
+            transform.parent.GetComponent<PlayerCombat>().Ready();
         }
         else
         {
+            //TODO:敌人AI
+        }
+    }
 
+    /// <summary>
+    /// 检查是否有东西被击中
+    /// </summary>
+    public void Check4Hit()
+    {
+        //检查玩家是否击中了东西
+        if (isPlayer)
+        {
+            PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
+            if (playerCombat != null)
+            {
+                playerCombat.CheckForHit();
+            }
+            else
+            {
+                Debug.Log("找不到组件 '" + transform.parent.name + "'.");
+            }
+        }
+        else
+        {
+            //TODO:检查AI是否击中
         }
     }
 
@@ -73,7 +97,7 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ShowDustEffectJump()
     {
-        GameObject.Instantiate(DustEffectJump, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+        //GameObject.Instantiate(DustEffectJump, transform.position + Vector3.up * 0.13f, Quaternion.identity);
     }
 
     /// <summary>
@@ -81,6 +105,6 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ShowDustEffectLand()
     {
-        GameObject.Instantiate(DustEffectLand, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+        //GameObject.Instantiate(DustEffectLand, transform.position + Vector3.up * 0.13f, Quaternion.identity);
     }
 }

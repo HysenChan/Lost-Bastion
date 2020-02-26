@@ -4,17 +4,6 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    //战斗类型
-    public enum COMBATACTION
-    {
-        NONE,
-        PUNCH,
-        KICK,
-        JUMP,
-        DEFEND,
-        WEAPONATTACK,
-    };
-
     //判断是否为键盘输入，方便后期扩展
     public bool UseKeyboardInput;
 
@@ -37,9 +26,10 @@ public class InputManager : MonoBehaviour
     public delegate void MoveInputEventHandler(Vector2 dir);
     public static event MoveInputEventHandler onMoveInputEvent;
     //角色攻击的委托
-    public delegate void CombatInputEventHandler(COMBATACTION action);
+    public delegate void CombatInputEventHandler(INPUTACTION action);
     public static event CombatInputEventHandler onCombatInputEvent;
 
+    //TODO:显示UI部分
     private void Start()
     {
 
@@ -63,7 +53,7 @@ public class InputManager : MonoBehaviour
     }
 
     //战斗输入事件
-    public static void CombatInputEvent(COMBATACTION combatAction)
+    public static void CombatInputEvent(INPUTACTION combatAction)
     {
         if (onCombatInputEvent!=null)
         {
@@ -76,6 +66,7 @@ public class InputManager : MonoBehaviour
     {
         //角色移动
         float x = 0f, y = 0f;
+
         if (Input.GetKey(Up))
         {
             y =1f;
@@ -99,15 +90,15 @@ public class InputManager : MonoBehaviour
         //角色战斗
         if (Input.GetKeyDown(PunchKey))
         {
-            CombatInputEvent(COMBATACTION.PUNCH);
+            CombatInputEvent(INPUTACTION.PUNCH);
         }
         if (Input.GetKeyDown(KickKey))
         {
-            CombatInputEvent(COMBATACTION.KICK);
+            CombatInputEvent(INPUTACTION.KICK);
         }
         if (Input.GetKeyDown(JumpKey))
         {
-            CombatInputEvent(COMBATACTION.JUMP);
+            CombatInputEvent(INPUTACTION.JUMP);
         }
 
         defendKeyDown = Input.GetKey(DefendKey);
@@ -119,3 +110,14 @@ public class InputManager : MonoBehaviour
         return defendKeyDown;
     }
 }
+
+//战斗类型
+public enum INPUTACTION
+{
+    NONE,
+    PUNCH,
+    KICK,
+    JUMP,
+    DEFEND,
+    WEAPONATTACK,
+};
