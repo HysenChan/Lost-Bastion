@@ -20,6 +20,15 @@ public class PlayerCombat : MonoBehaviour
     public bool comboContinueOnHit = true;//仅在前一次攻击被击中时才继续使用连击
     public float GroundAttackDistance = 1.5f;//距敌人可进行地面攻击的距离
     public bool resetComboChainOnChangeCombo; //切换到其他组合链时重新启动组合
+    public bool invulnerableDuringJump = false; //检查是否可以在跳跃过程中击中玩家
+    public bool blockAttacksFromBehind = false; //阻止来自后面的敌人袭击
+    public float hitKnockBackForce = 1.5f; //被击中向后退的力
+    public int knockdownHitCount = 3;//玩家被击倒之前可以被击中的次数
+    public float hitRecoveryTime = 0.3f; //从被攻击恢复所需的时间
+    public float KnockbackForce = 4; //击倒的水平力
+    public float KnockdownUpForce = 5; //击倒的垂直力
+    public float KnockdownTimeout = 0; //击倒后反应过来的时间
+    public float KnockdownStandUpTime = .8f; //站立动画完成所需的时间
 
     [Header("States")]
     public DIRECTION currentDirection;//当前角色的朝向
@@ -44,6 +53,12 @@ public class PlayerCombat : MonoBehaviour
     public DamageObject JumpKickData; //跳踢攻击数据
     private DamageObject lastAttack;//来自最近一次攻击的数据
 
+    [Header("Audio")]
+    public string knockdownVoiceSFX = "";
+    public string hitVoiceSFX = "";
+    public string DeathVoiceSFX = "";
+    public string defenceHitSFX = "";
+
     private int EnemyLayer;//敌人的层级
     private int DestroyableObjectLayer;//破坏对象的层级
     private int EnvironmentLayer;//环境的层级
@@ -53,6 +68,10 @@ public class PlayerCombat : MonoBehaviour
     private Vector3 fixedVelocity;
     private bool updateVelocity;
     private int attackNum = -1;//当前攻击组合编号
+    private float LastHitTime = 0; // 最后一次被打中的时间
+    public float hitThreshold=0.2f;//再次受到打击之前的时间
+    private int hitKnockDownCount = 0;//玩家连续被击中的次数
+    private int hitKnockDownResetTime = 2;//重置被击倒前时间
 
     //玩家可以攻击的状态列表
     private List<PLAYERSTATE> AttackStates = new List<PLAYERSTATE>()
@@ -122,8 +141,12 @@ public class PlayerCombat : MonoBehaviour
         //开启EnemyLayer和DestroyableObjectLayer层
         HitLayerMask = (1 << EnemyLayer) | (1 << DestroyableObjectLayer);
 
-        //TODO:在跳跃过程中设置玩家为无敌
-
+        //在跳跃过程中设置玩家为无敌
+        if (!invulnerableDuringJump)
+        {
+            HitableStates.Add(PLAYERSTATE.JUMPING);
+            HitableStates.Add(PLAYERSTATE.JUMPKICK);
+        }
     }
 
     private void Update()
@@ -391,10 +414,9 @@ public class PlayerCombat : MonoBehaviour
         {
             playerAnimator.SetAnimatorTrigger(currentWeapon.damageObject.animTrigger);
         }
-        //TODO:音效
         if (!string.IsNullOrEmpty(currentWeapon.useSound))
         {
-
+            GlobalAudioPlayer.PlaySFX(currentWeapon.useSound);
         }
         Invoke("Ready", currentWeapon.damageObject.duration);
         if (currentWeapon.damageType==WEAPONDAMAGETYPE.WEAPONONUSE)
@@ -421,10 +443,9 @@ public class PlayerCombat : MonoBehaviour
     IEnumerator DestroyCurrentWeapon(float delay)
     {
         yield return new WaitForSeconds(delay);
-        //TODO:音效
         if (currentWeapon.damageType==WEAPONDAMAGETYPE.WEAPONONUSE)
         {
-
+            GlobalAudioPlayer.PlaySFX(currentWeapon.breakSound);
         }
         Destroy(currentWeapon.playerHandPrefab);
         currentWeapon.BreakWeapon();
@@ -540,6 +561,228 @@ public class PlayerCombat : MonoBehaviour
         {
             targetHit = false;
         }
+    }
+
+    /// <summary>
+    /// 在编辑器状态显示角色攻击范围盒子方便调试
+    /// </summary>
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        if (lastAttack != null && (Time.time - lastAttackTime) < lastAttack.duration)
+        {
+            Gizmos.color = Color.red;
+            Vector3 boxPositon = transform.position + (Vector3.up * lastAttack.collHeight) + Vector3.right * ((int)lastAttackDirection * lastAttack.collDistance);
+            Vector3 boxSize = new Vector3(lastAttack.CollSize, lastAttack.CollSize, hitZRange);
+            Gizmos.DrawCube(boxPositon, boxSize);
+        }
+    }
+#endif
+
+    #endregion
+
+    #region 被敌人击中
+
+    /// <summary>
+    /// 我们被击中
+    /// </summary>
+    /// <param name="damage">伤害</param>
+    public void Hit(DamageObject damage)
+    {
+        //判断是否可以再次被击中的时间间隔
+        if (Time.time<LastHitTime+hitThreshold)
+        {
+            return;
+        }
+        //检查我们是否处于可被攻击状态
+        if (HitableStates.Contains(playerState.currentState))
+        {
+            CancelInvoke();
+
+            //被攻击时摄像机抖动
+            CameraShake camShake = Camera.main.GetComponent<CameraShake>();
+            if (camShake != null)
+            {
+                camShake.Shake(.1f);
+            }
+
+            //防御接下来的攻击
+            if (playerState.currentState==PLAYERSTATE.DEFEND&&!damage.DefenceOverride&&(IsFacingTarget(damage.inflictor)||blockAttacksFromBehind))
+            {
+                Defend(damage);
+                return;
+            }
+            else
+            {
+                playerAnimator.SetAnimatorBool("Defend", false);
+            }
+
+            UpdateHitCounter();
+            LastHitTime = Time.time;
+
+            //展示被击中特效
+            playerAnimator.ShowHitEffect();
+
+            //减少生命值
+            HealthSystem healthSystem = GetComponent<HealthSystem>();
+            if (healthSystem!=null)
+            {
+                healthSystem.SubstractHealth(damage.damageCount);
+                if (healthSystem.CurrentHp==0)
+                {
+                    return;
+                }
+            }
+
+            //检查是否被击倒在地
+            if ((hitKnockDownCount >= knockdownHitCount || !IsGrounded() || damage.knockDown) && playerState.currentState != PLAYERSTATE.KNOCKDOWN)
+            {
+                hitKnockDownCount = 0;
+                StopCoroutine("KnockDownSequence");
+                StartCoroutine("KnockDownSequence", damage.inflictor);
+                GlobalAudioPlayer.PlaySFXAtPosition(damage.hitSFX, transform.position + Vector3.up);
+                GlobalAudioPlayer.PlaySFXAtPosition(knockdownVoiceSFX, transform.position + Vector3.up);
+                return;
+            }
+
+            //默认被击
+            int i = Random.Range(1, 3);
+            playerAnimator.SetAnimatorTrigger("Hit" + i);
+            SetVelocity(Vector3.zero);
+            playerState.SetState(PLAYERSTATE.HIT);
+
+            //从冲击中增加一点力
+            if (IsFacingTarget(damage.inflictor))
+            {
+                playerAnimator.AddForce(-1.5f);
+            }
+            else
+            {
+                playerAnimator.AddForce(1.5f);
+            }
+
+            //音效
+            GlobalAudioPlayer.PlaySFXAtPosition(damage.hitSFX, transform.position + Vector3.up);
+            GlobalAudioPlayer.PlaySFXAtPosition(hitVoiceSFX, transform.position + Vector3.up);
+
+            Invoke("Ready", hitRecoveryTime);
+        }
+    }
+
+    /// <summary>
+    /// 更新被打了多少次
+    /// </summary>
+    private void UpdateHitCounter()
+    {
+        if (Time.time-LastHitTime<hitKnockDownResetTime)
+        {
+            hitKnockDownCount += 1;
+        }
+        else
+        {
+            hitKnockDownCount = 1;
+        }
+        LastHitTime = Time.time;
+    }
+
+    /// <summary>
+    /// 重载Defend()方法，用于防御即将到达的伤害
+    /// </summary>
+    /// <param name="damage"></param>
+    private void Defend(DamageObject damage)
+    {
+        //防御的特效
+        playerAnimator.ShowDefendEffect();
+
+        //添加防御的音效
+        GlobalAudioPlayer.PlaySFXAtPosition(defenceHitSFX, transform.position + Vector3.up);
+
+        //添加一个用于防御的力
+        if (IsFacingTarget(damage.inflictor))
+        {
+            playerAnimator.AddForce(-hitKnockBackForce);
+        }
+        else
+        {
+            playerAnimator.AddForce(hitKnockBackForce);
+        }
+    }
+
+    /// <summary>
+    /// 被击倒
+    /// </summary>
+    /// <param name="inflictor"></param>
+    /// <returns></returns>
+    public IEnumerator KnockDownSequence(GameObject inflictor)
+    {
+        playerState.SetState(PLAYERSTATE.KNOCKDOWN);
+        playerAnimator.StopAllCoroutines();
+        yield return new WaitForFixedUpdate();
+
+        //倒地方向朝攻击来源方向
+        int dir = inflictor.transform.position.x > transform.position.x ? 1 : -1;
+        currentDirection = (DIRECTION)dir;
+        TurnToDir(currentDirection);
+
+        //更新玩家移动
+        PlayerMovement playerMovement = GetComponent<PlayerMovement>();
+        if (playerMovement!=null)
+        {
+            playerMovement.CancelJump();
+            playerMovement.SetDirection(currentDirection);
+        }
+
+        //击倒的力
+        playerAnimator.SetAnimatorTrigger("KnockDown_Up");
+        while (IsGrounded())
+        {
+            SetVelocity(new Vector3(KnockbackForce * -dir, KnockdownUpForce, 0));
+            yield return new WaitForFixedUpdate();
+        }
+
+        //往上
+        while (rb.velocity.y >= 0)
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        //往下
+        playerAnimator.SetAnimatorTrigger("KnockDown_Down");
+        while (!IsGrounded())
+        {
+            yield return new WaitForFixedUpdate();
+        }
+
+        //击中地面
+        playerAnimator.SetAnimatorTrigger("KnockDown_End");
+        CameraShake camShake = Camera.main.GetComponent<CameraShake>();
+        if (camShake != null) camShake.Shake(.3f);
+        playerAnimator.ShowDustEffectLand();
+
+        //播放音效
+        GlobalAudioPlayer.PlaySFXAtPosition("Drop", transform.position);
+
+        //地面滑动
+        float t = 0;
+        float speed = 2;
+        Vector3 fromVelocity = rb.velocity;
+        while (t < 1)
+        {
+            SetVelocity(Vector3.Lerp(new Vector3(fromVelocity.x, rb.velocity.y + Physics.gravity.y * Time.fixedDeltaTime, fromVelocity.z), new Vector3(0, rb.velocity.y, 0), t));
+            t += Time.deltaTime * speed;
+            yield return null;
+        }
+
+        //倒地时间
+        SetVelocity(Vector3.zero);
+        yield return new WaitForSeconds(KnockdownTimeout);
+
+        //倒地站起来
+        playerAnimator.SetAnimatorTrigger("StandUp");
+        playerState.currentState = PLAYERSTATE.STANDUP;
+
+        yield return new WaitForSeconds(KnockdownStandUpTime);
+        playerState.currentState = PLAYERSTATE.IDLE;
     }
 
     #endregion
