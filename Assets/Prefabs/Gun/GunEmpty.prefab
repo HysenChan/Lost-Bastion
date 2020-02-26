@@ -72,7 +72,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1655860656415804}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 465270fbb0be33d4892d62bc47708472, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a8ed1e7a296321488e336c2ef1b357d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pauzeBeforeStart: 0.5

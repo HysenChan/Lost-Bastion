@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1298282074139128
+--- !u!1 &1026007142502224
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,45 +8,45 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4846781241638320}
-  - component: {fileID: 33895672777573702}
-  - component: {fileID: 23656415943908064}
-  m_Layer: 10
+  - component: {fileID: 4154084650068946}
+  - component: {fileID: 33936922846020938}
+  - component: {fileID: 23947261118438980}
+  m_Layer: 0
   m_Name: GFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4846781241638320
+--- !u!4 &4154084650068946
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298282074139128}
-  m_LocalRotation: {x: -0.6109424, y: 0.61094236, z: -0.35601884, w: -0.35601878}
-  m_LocalPosition: {x: -0.178, y: 0.023, z: -0.01}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.8}
+  m_GameObject: {fileID: 1026007142502224}
+  m_LocalRotation: {x: 0.1902326, y: 0.5913578, z: 0.77395576, w: -0.12288227}
+  m_LocalPosition: {x: 0.063, y: 0.019, z: -0.024}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_Children: []
-  m_Father: {fileID: 4656019992877438}
+  m_Father: {fileID: 4085886363947744}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 60.462, y: 180.00002, z: -90.00001}
---- !u!33 &33895672777573702
+  m_LocalEulerAnglesHint: {x: -105.82, y: 213.163, z: -7.3299866}
+--- !u!33 &33936922846020938
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298282074139128}
-  m_Mesh: {fileID: 4300000, guid: 30005f944b3d81a42ae4b7fccda420fe, type: 3}
---- !u!23 &23656415943908064
+  m_GameObject: {fileID: 1026007142502224}
+  m_Mesh: {fileID: 4300002, guid: f485eea284c3fcf418fe6e6e89b524c3, type: 3}
+--- !u!23 &23947261118438980
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1298282074139128}
+  m_GameObject: {fileID: 1026007142502224}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -57,7 +57,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5107f73037565c04eae25704dfdbf625, type: 2}
+  - {fileID: 2100000, guid: adeebd67b1f1d024abcd5539eb10dbfd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -77,7 +77,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!1 &1937479339862522
+--- !u!1 &1978773268404412
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -85,52 +85,52 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4656019992877438}
-  - component: {fileID: 65274804557933654}
-  - component: {fileID: 54569097154169394}
-  - component: {fileID: 114483934812420522}
+  - component: {fileID: 4085886363947744}
+  - component: {fileID: 65957439381201316}
+  - component: {fileID: 54073157682926732}
+  - component: {fileID: 114624034498029540}
   m_Layer: 10
-  m_Name: PickupKnife
+  m_Name: PickupGun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4656019992877438
+--- !u!4 &4085886363947744
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937479339862522}
-  m_LocalRotation: {x: -0, y: 0.31141984, z: -0, w: 0.95027244}
-  m_LocalPosition: {x: 6.29, y: 0.131, z: -1.06}
+  m_GameObject: {fileID: 1978773268404412}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 3.246, y: 1.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4846781241638320}
+  - {fileID: 4154084650068946}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 36.29, z: 0}
---- !u!65 &65274804557933654
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65957439381201316
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937479339862522}
+  m_GameObject: {fileID: 1978773268404412}
   m_Material: {fileID: 13400000, guid: d123f6c1ac9a3e347a4515bb5a4485a0, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.6, y: 0.08, z: 0.2}
+  m_Size: {x: 0.4, y: 0.1, z: 0.3}
   m_Center: {x: 0, y: 0.03, z: 0}
---- !u!54 &54569097154169394
+--- !u!54 &54073157682926732
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937479339862522}
+  m_GameObject: {fileID: 1978773268404412}
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
@@ -140,41 +140,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 122
   m_CollisionDetection: 0
---- !u!114 &114483934812420522
+--- !u!114 &114624034498029540
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1937479339862522}
+  m_GameObject: {fileID: 1978773268404412}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: efddfbdf85d73c5448fed29aaeb0fb52, type: 3}
+  m_Script: {fileID: 11500000, guid: 17cf9a5df20611940997660523c6724f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   weapon:
-    weaponName: Knife
-    playerHandPrefab: {fileID: 1000013591963784, guid: 34ec71cc60bda8c41a246b3a8dd41b50,
+    playerHandPrefab: {fileID: 1590801490989472, guid: 36f5478838a455d4787e684a54036118,
       type: 3}
-    WeaponEndState: {fileID: 0}
-    timesToUse: 1
-    degenerateType: 0
+    WeaponEndState: {fileID: 1655860656415804, guid: 344dbfdbc4f28e84b9cb761a39fc789f,
+      type: 3}
+    timesToUse: 3
     damageObject:
-      animTrigger: ThrowWeapon
-      damage: 6
-      duration: 0.3
+      damage: 20
+      animTrigger: FireGun
+      duration: 0.6
       comboResetTime: 0
-      hitSFX: KnifeHit
-      knockDown: 1
-      slowMotionEffect: 0
-      DefenceOverride: 1
-      isGroundAttack: 0
+      hitSFX: BulletHit
       CollSize: 0
       collDistance: 0
       collHeight: 1.5
       inflictor: {fileID: 0}
-    useSound: 
-    breakSound: 
+    useSound: GunShot
+    breakSound: GunEmpty
+    damageType: 0
   SFX: ItemPickup
   pickupEffect: {fileID: 0}
-  pickUpRange: 1
+  pickupRange: 1
