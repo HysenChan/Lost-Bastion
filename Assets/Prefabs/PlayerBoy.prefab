@@ -318,7 +318,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1070673257826786}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -334,7 +334,7 @@ Transform:
   - {fileID: 4765118382508438}
   m_Father: {fileID: 4792588005983590}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!95 &95006528508863862
 Animator:
   serializedVersion: 3
@@ -4293,6 +4293,7 @@ GameObject:
   - component: {fileID: 6821323556179432361}
   - component: {fileID: 9009808099357213848}
   - component: {fileID: 1281002535797814508}
+  - component: {fileID: 6169843021010551719}
   m_Layer: 9
   m_Name: PlayerBoy
   m_TagString: Player
@@ -4391,6 +4392,104 @@ MonoBehaviour:
   jumpInProgress: 0
   isGrounded: 0
   playerInCameraView: 0
+--- !u!114 &6169843021010551719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877574274248960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be448fc73cb90d74f8a48a0feacd17ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponBone: {fileID: 5092790445623016557}
+  canTurnWhileDefending: 0
+  comboContinueOnHit: 1
+  GroundAttackDistance: 1.4
+  resetComboChainOnChangeCombo: 0
+  currentDirection: 0
+  itemInRange: {fileID: 0}
+  targetHit: 0
+  hitZRange: 2.2
+  PunchCombo:
+  - damage: 1
+    animTrigger: Punch1
+    duration: 0.22
+    comboResetTime: 0.35
+    hitSFX: DefaultHit
+    CollSize: 1
+    collDistance: 0.76
+    collHeight: 1.17
+    inflictor: {fileID: 0}
+  - damage: 2
+    animTrigger: Punch2
+    duration: 0.3
+    comboResetTime: 0.35
+    hitSFX: Defaulthit
+    CollSize: 1
+    collDistance: 0.76
+    collHeight: 1.17
+    inflictor: {fileID: 0}
+  - damage: 3
+    animTrigger: Punch3
+    duration: 0.5
+    comboResetTime: 1
+    hitSFX: HeavyHit
+    CollSize: 1
+    collDistance: 0.76
+    collHeight: 1.17
+    inflictor: {fileID: 0}
+  KickCombo:
+  - damage: 2
+    animTrigger: Kick1
+    duration: 0.45
+    comboResetTime: 0.35
+    hitSFX: DefaultHit
+    CollSize: 1
+    collDistance: 0.95
+    collHeight: 1.1
+    inflictor: {fileID: 0}
+  - damage: 3
+    animTrigger: Kick2
+    duration: 0.45
+    comboResetTime: 0.35
+    hitSFX: Defaulthit
+    CollSize: 1
+    collDistance: 0.96
+    collHeight: 1.15
+    inflictor: {fileID: 0}
+  GroundPunchData:
+    damage: 2
+    animTrigger: GroundPunch
+    duration: 0.68
+    comboResetTime: 0
+    hitSFX: GroundPunchHit
+    CollSize: 1.1
+    collDistance: 0.73
+    collHeight: 0.2
+    inflictor: {fileID: 0}
+  GroundKickData:
+    damage: 2
+    animTrigger: GroundKick
+    duration: 1.1
+    comboResetTime: 0
+    hitSFX: GroundPunchHit
+    CollSize: 1.1
+    collDistance: 0.73
+    collHeight: 0.2
+    inflictor: {fileID: 0}
+  JumpKickData:
+    damage: 3
+    animTrigger: JumpKick
+    duration: 3
+    comboResetTime: 1
+    hitSFX: Defaulthit
+    CollSize: 1.2
+    collDistance: 0.58
+    collHeight: 1.2
+    inflictor: {fileID: 0}
 --- !u!1 &1883661953617476
 GameObject:
   m_ObjectHideFlags: 0
