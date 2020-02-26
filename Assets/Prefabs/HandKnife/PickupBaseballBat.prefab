@@ -76,9 +76,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon:
-    WeaponEndState: {fileID: 1596423937318954, guid: eb12ae988b8d9fc4ba536879b036bc39,
+    playerHandPrefab: {fileID: 1596423937318954, guid: eb12ae988b8d9fc4ba536879b036bc39,
       type: 3}
-    playerHandPrefab: {fileID: 1241872331814296, guid: 7a80c159a555c164aa993a5d17a03ef5,
+    WeaponEndState: {fileID: 1241872331814296, guid: 7a80c159a555c164aa993a5d17a03ef5,
       type: 3}
     timesToUse: 3
     damageObject:
