@@ -5,12 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public class DamageObject
 {
-    public int damage;
     public string animTrigger = "";
+    public int damageCount;
     public float duration = 1f;
     public float comboResetTime = 0.5f;//攻击重置事件为0.5s
     public string hitSFX = "";
-    //TODO:被击倒之类
+    public bool knockDown;
+    public bool slowMotionEffect;
+    public bool DefenceOverride;
+    public bool isGroundAttack;
 
     [Header("Hit Collider Settings")]
     public float CollSize;
@@ -20,9 +23,9 @@ public class DamageObject
     [HideInInspector]
     public GameObject inflictor;
 
-    public DamageObject(int damage,GameObject inflictor)
+    public DamageObject(int damageCount,GameObject inflictor)
     {
-        this.damage = damage;
+        this.damageCount = damageCount;
         this.inflictor = inflictor;
     }
 }

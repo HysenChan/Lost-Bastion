@@ -93,11 +93,28 @@ public class PlayerAnimator : MonoBehaviour
     }
 
     /// <summary>
+    /// 展示打击特效
+    /// </summary>
+    public void ShowHitEffect()
+    {
+        float unitHeight = 1.6f;
+        GameObject.Instantiate(HitEffect, transform.position + Vector3.up * unitHeight, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// 展示防御特效
+    /// </summary>
+    public void ShowDefendEffect()
+    {
+        GameObject.Instantiate(DefendEffect, transform.position + Vector3.up * 1.3f, Quaternion.identity);
+    }
+
+    /// <summary>
     /// 展示跳跃特效
     /// </summary>
     public void ShowDustEffectJump()
     {
-        //GameObject.Instantiate(DustEffectJump, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+        GameObject.Instantiate(DustEffectJump, transform.position + Vector3.up * 0.13f, Quaternion.identity);
     }
 
     /// <summary>
@@ -105,6 +122,121 @@ public class PlayerAnimator : MonoBehaviour
     /// </summary>
     public void ShowDustEffectLand()
     {
-        //GameObject.Instantiate(DustEffectLand, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+        GameObject.Instantiate(DustEffectLand, transform.position + Vector3.up * 0.13f, Quaternion.identity);
+    }
+
+    /// <summary>
+    /// 播放音效
+    /// </summary>
+    /// <param name="sfxName"></param>
+    public void PlaySFX(string sfxName)
+    {
+        GlobalAudioPlayer.PlaySFXAtPosition(sfxName, transform.position + Vector3.up);
+    }
+
+    /// <summary>
+    /// 增加了很小的前向力
+    /// </summary>
+    /// <param name="force">力</param>
+    public void AddForce(float force)
+    {
+        StartCoroutine(AddForceCoroutine(force));
+    }
+
+    IEnumerator AddForceCoroutine(float force)
+    {
+        DIRECTION startDir = currentDirection;
+        Rigidbody rb = transform.parent.GetComponent<Rigidbody>();
+        float speed = 8f;
+        float t = 0;
+
+        while (t < 1)
+        {
+            yield return new WaitForFixedUpdate();
+            rb.velocity = Vector2.right * (int)startDir * Mathf.Lerp(force, rb.velocity.y, MathUtilities.Sinerp(0, 1, t));
+            t += Time.fixedDeltaTime * speed;
+            yield return null;
+        }
+    }
+
+    /// <summary>
+    /// 闪烁效果
+    /// </summary>
+    /// <param name="delayBeforeStart"></param>
+    /// <returns></returns>
+    public IEnumerator FlickerCoroutine(float delayBeforeStart)
+    {
+        yield return new WaitForSeconds(delayBeforeStart);
+
+        //查找此gameObject中的所有渲染器
+        Renderer[] CharRenderers = GetComponentsInChildren<Renderer>();
+
+        if (CharRenderers.Length > 0)
+        {
+            float t = 0;
+            while (t < 1)
+            {
+                float speed = Mathf.Lerp(15, 35, MathUtilities.Coserp(0, 1, t));
+                float i = Mathf.Sin(Time.time * speed);
+                foreach (Renderer r in CharRenderers)
+                    r.enabled = i > 0;
+                t += Time.deltaTime / 2;
+                yield return null;
+            }
+            foreach (Renderer r in CharRenderers)
+                r.enabled = false;
+        }
+        Destroy(transform.parent.gameObject);
+    }
+
+    /// <summary>
+    /// 相机抖动
+    /// </summary>
+    /// <param name="intensity"></param>
+    public void CamShake(float intensity)
+    {
+        CameraShake camShake = Camera.main.GetComponent<CameraShake>();
+        if (camShake != null)
+            camShake.Shake(intensity);
+    }
+
+    /// <summary>
+    /// 产生子弹
+    /// </summary>
+    /// <param name="name"></param>
+    public void SpawnProjectile(string name)
+    {
+        GameObject projectile = GameObject.Instantiate(Resources.Load(name)) as GameObject;
+        PlayerCombat playerCombat = transform.parent.GetComponent<PlayerCombat>();
+        if (playerCombat)
+        {
+            //将子弹方向设置为玩家方向
+            Projectile p = projectile.GetComponent<Projectile>();
+            if (p)
+            {
+                p.direction = playerCombat.currentDirection;
+                Weapon currentWeapon = playerCombat.GetCurrentWeapon();
+                if (currentWeapon != null)
+                {
+                    p.SetDamage(playerCombat.GetCurrentWeapon().damageObject);
+                }
+            }
+
+            //检查此武器是否有生成位置
+            ProjectileSpawnPos spawnPos = playerCombat.weaponBone.GetComponentInChildren<ProjectileSpawnPos>();
+            if (spawnPos)
+            {
+                //枪在指定位置生成
+                projectile.transform.position = spawnPos.transform.position;
+            }
+            else
+            {
+                //枪在手的位置生成
+                if (playerCombat.weaponBone)
+                {
+                    projectile.transform.position = playerCombat.weaponBone.transform.position;
+                }
+            }
+        }
     }
 }

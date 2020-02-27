@@ -413,10 +413,10 @@ public class PlayerMovement : MonoBehaviour
         //跳起的特效
         animator.ShowDustEffectJump();
 
-        //TODO:播放跳的音效
+        //播放跳的音效
         if (jumpUpVoice!="")
         {
-            //后期加上
+            GlobalAudioPlayer.PlaySFXAtPosition(jumpUpVoice, transform.position);
         }
 
         //等待直到下一个固定帧速率更新函数
@@ -445,7 +445,12 @@ public class PlayerMovement : MonoBehaviour
         //着地的特效
         animator.ShowDustEffectLand();
 
-        //TODO:修改跳起音效为行走音效
+        //修改跳起音效为行走音效
+        GlobalAudioPlayer.PlaySFX("FootStep");
+        if (jumpLandVoice!="")
+        {
+            GlobalAudioPlayer.PlaySFXAtPosition(jumpLandVoice, transform.position);
+        }
 
         //更新跳的状态
         jumpInProgress = false;
