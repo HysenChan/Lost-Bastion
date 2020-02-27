@@ -55,10 +55,10 @@ public class WeaponPickup : MonoBehaviour
             effect.transform.position = transform.position;
         }
 
-        //TODO:声音
+        //声音
         if (SFX != null)
         {
-
+            GlobalAudioPlayer.PlaySFX(SFX);
         }
 
         //武器装扮到玩家手上

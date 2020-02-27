@@ -158,19 +158,23 @@ MonoBehaviour:
     WeaponEndState: {fileID: 1655860656415804, guid: 344dbfdbc4f28e84b9cb761a39fc789f,
       type: 3}
     timesToUse: 3
+    damageType: 0
     damageObject:
-      damage: 20
       animTrigger: FireGun
+      damageCount: 20
       duration: 0.6
       comboResetTime: 0
       hitSFX: BulletHit
+      knockDown: 1
+      slowMotionEffect: 0
+      DefenceOverride: 1
+      isGroundAttack: 0
       CollSize: 0
       collDistance: 0
       collHeight: 1.5
       inflictor: {fileID: 0}
     useSound: GunShot
     breakSound: GunEmpty
-    damageType: 0
   SFX: ItemPickup
   pickupEffect: {fileID: 0}
   pickupRange: 1

@@ -574,7 +574,7 @@ public class PlayerCombat : MonoBehaviour
             Gizmos.color = Color.red;
             Vector3 boxPositon = transform.position + (Vector3.up * lastAttack.collHeight) + Vector3.right * ((int)lastAttackDirection * lastAttack.collDistance);
             Vector3 boxSize = new Vector3(lastAttack.CollSize, lastAttack.CollSize, hitZRange);
-            Gizmos.DrawCube(boxPositon, boxSize);
+            Gizmos.DrawWireCube(boxPositon, boxSize);
         }
     }
 #endif

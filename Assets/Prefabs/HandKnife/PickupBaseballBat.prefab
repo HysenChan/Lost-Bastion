@@ -81,20 +81,24 @@ MonoBehaviour:
     WeaponEndState: {fileID: 1241872331814296, guid: 7a80c159a555c164aa993a5d17a03ef5,
       type: 3}
     timesToUse: 3
+    damageType: 1
     damageObject:
-      damage: 6
       animTrigger: SwingWeapon
+      damageCount: 6
       duration: 0.5
       comboResetTime: 0
-      hitSFX: 
+      hitSFX: BaseballBatHit
+      knockDown: 1
+      slowMotionEffect: 0
+      DefenceOverride: 1
+      isGroundAttack: 0
       CollSize: 2
       collDistance: 1
       collHeight: 1
       inflictor: {fileID: 0}
     useSound: 
-    breakSound: 
-    damageType: 1
-  SFX: 
+    breakSound: BaseballBatBreak
+  SFX: ItemPickup
   pickupEffect: {fileID: 0}
   pickupRange: 1
 --- !u!1 &1740607778799176
