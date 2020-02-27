@@ -96,7 +96,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 3214b3cf7144ab94cad4c53bbb2d1cb9, type: 3}
     lastTimePlayed: 0
   - name: Music
-    volume: 0.7
+    volume: 0.5
     MinTimeBetweenCall: 0
     loop: 0
     clip:

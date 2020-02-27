@@ -795,7 +795,7 @@ public class PlayerCombat : MonoBehaviour
         //当角色碰到东西时才继续连击
         if (comboContinueOnHit&&!targetHit)
         {
-            continuePunchCombo = continuePunchCombo = false;
+            continuePunchCombo = continueKickCombo = false;
             lastAttackTime = 0;
         }
 

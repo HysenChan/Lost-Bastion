@@ -231,7 +231,7 @@ public class PlayerAnimator : MonoBehaviour
             }
             else
             {
-                //枪在手的位置生成
+                //把枪放在手的位置
                 if (playerCombat.weaponBone)
                 {
                     projectile.transform.position = playerCombat.weaponBone.transform.position;
