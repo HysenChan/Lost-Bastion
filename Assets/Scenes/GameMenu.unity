@@ -167,6 +167,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6169843021010551719, guid: 67d303b1c043ecd4ea5b1ba6ceab4348,
+        type: 3}
+      propertyPath: canTurnWhileDefending
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169843021010551719, guid: 67d303b1c043ecd4ea5b1ba6ceab4348,
+        type: 3}
+      propertyPath: hitRecoveryTime
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169843021010551719, guid: 67d303b1c043ecd4ea5b1ba6ceab4348,
+        type: 3}
+      propertyPath: hitThreshold
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6169843021010551719, guid: 67d303b1c043ecd4ea5b1ba6ceab4348,
+        type: 3}
+      propertyPath: hitKnockBackForce
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 67d303b1c043ecd4ea5b1ba6ceab4348, type: 3}
 --- !u!1 &504412201
