@@ -5,8 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class DamageObject
 {
-    public int damageCount;
     public string animTrigger = "";
+    public int damageCount;
     public float duration = 1f;
     public float comboResetTime = 0.5f;//攻击重置事件为0.5s
     public string hitSFX = "";

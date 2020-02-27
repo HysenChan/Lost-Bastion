@@ -10,25 +10,29 @@ public class PlayerCombat : MonoBehaviour
     [Header("Linked Components")]
     public Transform weaponBone; //将武器作为骨骼的Parents(手掌)
 
+    [Header("Attack Data & Combos")]
+    public float hitZRange = 2;//z轴的攻击范围
+
     private PlayerAnimator playerAnimator;//拿到动画制作器组件
     private PlayerState playerState;//拿到玩家的状态
     private Rigidbody rb;//拿到刚体
     private InputManager inputManager;//拿到输入管理器
 
     [Header("Setting")]
-    public bool canTurnWhileDefending;  //当在防御的时候能不能转身
+    public bool blockAttacksFromBehind = false; //阻止来自后面的敌人袭击
     public bool comboContinueOnHit = true;//仅在前一次攻击被击中时才继续使用连击
-    public float GroundAttackDistance = 1.5f;//距敌人可进行地面攻击的距离
     public bool resetComboChainOnChangeCombo; //切换到其他组合链时重新启动组合
     public bool invulnerableDuringJump = false; //检查是否可以在跳跃过程中击中玩家
-    public bool blockAttacksFromBehind = false; //阻止来自后面的敌人袭击
-    public float hitKnockBackForce = 1.5f; //被击中向后退的力
-    public int knockdownHitCount = 3;//玩家被击倒之前可以被击中的次数
+    public bool canTurnWhileDefending;  //当在防御的时候能不能转身
     public float hitRecoveryTime = 0.3f; //从被攻击恢复所需的时间
-    public float KnockbackForce = 4; //击倒的水平力
-    public float KnockdownUpForce = 5; //击倒的垂直力
+    public float hitThreshold = 0.2f;//再次受到打击之前的时间
+    public float hitKnockBackForce = 1.5f; //被击中向后退的力
+    public float GroundAttackDistance = 1.5f;//距敌人可进行地面攻击的距离
+    public int knockdownHitCount = 3;//玩家被击倒之前可以被击中的次数
     public float KnockdownTimeout = 0; //击倒后反应过来的时间
-    public float KnockdownStandUpTime = .8f; //站立动画完成所需的时间
+    public float KnockdownUpForce = 5; //击倒的垂直力
+    public float KnockbackForce = 4; //击倒的水平力
+    public float KnockdownStandUpTime = 0.8f; //站立动画完成所需的时间
 
     [Header("States")]
     public DIRECTION currentDirection;//当前角色的朝向
@@ -41,9 +45,6 @@ public class PlayerCombat : MonoBehaviour
     private DIRECTION lastAttackDirection;
     [SerializeField]
     private bool targetHit; //如果最后一次击中目标，则为true
-
-    [Header("Attack Data & Combos")]
-    public float hitZRange = 2;//z轴的攻击范围
 
     [Header("GameObject")]
     public DamageObject[] PunchCombo; //拳头攻击列表
@@ -69,7 +70,6 @@ public class PlayerCombat : MonoBehaviour
     private bool updateVelocity;
     private int attackNum = -1;//当前攻击组合编号
     private float LastHitTime = 0; // 最后一次被打中的时间
-    public float hitThreshold=0.2f;//再次受到打击之前的时间
     private int hitKnockDownCount = 0;//玩家连续被击中的次数
     private int hitKnockDownResetTime = 2;//重置被击倒前时间
 

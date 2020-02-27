@@ -4292,6 +4292,7 @@ GameObject:
   - component: {fileID: 54606961099500798}
   - component: {fileID: 6821323556179432361}
   - component: {fileID: 9009808099357213848}
+  - component: {fileID: 5500831746039138232}
   - component: {fileID: 1281002535797814508}
   - component: {fileID: 6169843021010551719}
   m_Layer: 9
@@ -4313,6 +4314,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4988767361665516}
+  - {fileID: 1358455759614280526}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4359,6 +4361,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
+--- !u!114 &5500831746039138232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1877574274248960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193755aa5f647d04f820fc032f6c77a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHp: 100
+  CurrentHp: 100
+  invulnerable: 0
 --- !u!114 &1281002535797814508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4405,91 +4422,137 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponBone: {fileID: 5092790445623016557}
-  canTurnWhileDefending: 0
+  hitZRange: 2.2
+  blockAttacksFromBehind: 0
   comboContinueOnHit: 1
-  GroundAttackDistance: 1.4
   resetComboChainOnChangeCombo: 0
+  invulnerableDuringJump: 1
+  canTurnWhileDefending: 0
+  hitRecoveryTime: 0.3
+  hitThreshold: 0.2
+  hitKnockBackForce: 1.5
+  GroundAttackDistance: 1.4
+  knockdownHitCount: 3
+  KnockdownTimeout: 0
+  KnockdownUpForce: 5
+  KnockbackForce: 4
+  KnockdownStandUpTime: 0.8
   currentDirection: -1
   itemInRange: {fileID: 0}
   targetHit: 0
-  hitZRange: 2.2
   PunchCombo:
-  - damage: 1
-    animTrigger: Punch1
+  - animTrigger: Punch1
+    damageCount: 1
     duration: 0.22
     comboResetTime: 0.35
     hitSFX: DefaultHit
+    knockDown: 0
+    slowMotionEffect: 0
+    DefenceOverride: 0
+    isGroundAttack: 0
     CollSize: 1
     collDistance: 0.76
     collHeight: 1.17
     inflictor: {fileID: 0}
-  - damage: 2
-    animTrigger: Punch2
+  - animTrigger: Punch2
+    damageCount: 2
     duration: 0.3
     comboResetTime: 0.35
     hitSFX: Defaulthit
+    knockDown: 0
+    slowMotionEffect: 0
+    DefenceOverride: 0
+    isGroundAttack: 0
     CollSize: 1
     collDistance: 0.76
     collHeight: 1.17
     inflictor: {fileID: 0}
-  - damage: 3
-    animTrigger: Punch3
+  - animTrigger: Punch3
+    damageCount: 3
     duration: 0.5
     comboResetTime: 1
     hitSFX: HeavyHit
+    knockDown: 1
+    slowMotionEffect: 0
+    DefenceOverride: 0
+    isGroundAttack: 0
     CollSize: 1
     collDistance: 0.76
     collHeight: 1.17
     inflictor: {fileID: 0}
   KickCombo:
-  - damage: 2
-    animTrigger: Kick1
+  - animTrigger: Kick1
+    damageCount: 2
     duration: 0.45
     comboResetTime: 0.35
     hitSFX: DefaultHit
+    knockDown: 0
+    slowMotionEffect: 0
+    DefenceOverride: 0
+    isGroundAttack: 0
     CollSize: 1
     collDistance: 0.95
     collHeight: 1.1
     inflictor: {fileID: 0}
-  - damage: 3
-    animTrigger: Kick2
+  - animTrigger: Kick2
+    damageCount: 3
     duration: 0.45
     comboResetTime: 0.35
-    hitSFX: Defaulthit
+    hitSFX: HeavyHit
+    knockDown: 1
+    slowMotionEffect: 1
+    DefenceOverride: 0
+    isGroundAttack: 0
     CollSize: 1
     collDistance: 0.96
     collHeight: 1.15
     inflictor: {fileID: 0}
   GroundPunchData:
-    damage: 2
     animTrigger: GroundPunch
+    damageCount: 2
     duration: 0.68
     comboResetTime: 0
     hitSFX: GroundPunchHit
+    knockDown: 0
+    slowMotionEffect: 0
+    DefenceOverride: 0
+    isGroundAttack: 1
     CollSize: 1.1
     collDistance: 0.73
     collHeight: 0.2
     inflictor: {fileID: 0}
   GroundKickData:
-    damage: 2
     animTrigger: GroundKick
+    damageCount: 2
     duration: 1.1
     comboResetTime: 0
     hitSFX: GroundPunchHit
+    knockDown: 0
+    slowMotionEffect: 0
+    DefenceOverride: 0
+    isGroundAttack: 1
     CollSize: 1.1
     collDistance: 0.73
     collHeight: 0.2
     inflictor: {fileID: 0}
   JumpKickData:
-    damage: 3
     animTrigger: JumpKick
-    duration: 3
-    comboResetTime: 1
+    damageCount: 3
+    duration: 1
+    comboResetTime: 0
     hitSFX: Defaulthit
+    knockDown: 1
+    slowMotionEffect: 1
+    DefenceOverride: 1
+    isGroundAttack: 0
     CollSize: 1.2
     collDistance: 0.58
     collHeight: 1.2
     inflictor: {fileID: 0}
+  knockdownVoiceSFX: PlayerKnockDownVoice
+  hitVoiceSFX: PlayerHit
+  DeathVoiceSFX: PlayerDeath
+  defenceHitSFX: DefendHit
 --- !u!1 &1883661953617476
 GameObject:
   m_ObjectHideFlags: 0
@@ -5047,3 +5110,101 @@ Transform:
   m_Father: {fileID: 4252081323694624}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3260552680838430051
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1358455759614280526}
+  - component: {fileID: 896744059957702369}
+  - component: {fileID: 3605473330798806147}
+  - component: {fileID: 2397253912711528539}
+  m_Layer: 0
+  m_Name: BlobShadow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1358455759614280526
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260552680838430051}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4792588005983590}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &896744059957702369
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260552680838430051}
+  m_Mesh: {fileID: 4300000, guid: 212b140d060f9d44e869f847a688df3a, type: 3}
+--- !u!23 &3605473330798806147
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260552680838430051}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 4790ce869f1a72f4e8686d98dd524f39, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!114 &2397253912711528539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260552680838430051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6dfba07efddaff4da92ea785c7d577d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FollowBone: {fileID: 0}
+  BlobShadowSize: 1.4
+  DistanceScale: 3
+  Yoffset: 0.01
+  GroundLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  followTerrainRotation: 1

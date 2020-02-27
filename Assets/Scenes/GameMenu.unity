@@ -276,6 +276,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13e39a7c8e002c948af41a065e7d1135, type: 3}
+--- !u!1001 &986854503
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1937479339862522, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_Name
+      value: PickupKnife
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4656019992877438, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 865f6a72e8814bd4fbe38b1508a98bba, type: 3}
 --- !u!1 &1116768819
 GameObject:
   m_ObjectHideFlags: 0
@@ -422,6 +479,31 @@ PrefabInstance:
     - target: {fileID: 4055773158081944, guid: fcd0b346c69460a4ea8393d7dee9c741, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318463254527000, guid: fcd0b346c69460a4ea8393d7dee9c741,
+        type: 3}
+      propertyPath: weapon.damageObject.knockDown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318463254527000, guid: fcd0b346c69460a4ea8393d7dee9c741,
+        type: 3}
+      propertyPath: weapon.damageObject.DefenceOverride
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318463254527000, guid: fcd0b346c69460a4ea8393d7dee9c741,
+        type: 3}
+      propertyPath: weapon.breakSound
+      value: BaseballBatBreak
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318463254527000, guid: fcd0b346c69460a4ea8393d7dee9c741,
+        type: 3}
+      propertyPath: weapon.damageObject.damageCount
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114318463254527000, guid: fcd0b346c69460a4ea8393d7dee9c741,
+        type: 3}
+      propertyPath: SFX
+      value: ItemPickup
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fcd0b346c69460a4ea8393d7dee9c741, type: 3}
