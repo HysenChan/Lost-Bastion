@@ -97,7 +97,7 @@ public class AudioPlayer : MonoBehaviour
         }
         if (!SFXFound)
         {
-            Debug.Log("no sfx found with name: " + name);
+            Debug.Log("找不到该音效："+name);
         }
     }
 
