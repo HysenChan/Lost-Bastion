@@ -25,7 +25,11 @@ public class BreakableObject : MonoBehaviour,IDamagable<DamageObject>
 
     public void Hit(DamageObject damageObject)
     {
-        //TODO:添加音效
+        //播放木箱子被打破的音效
+        if (hitSFX!="")
+        {
+            GlobalAudioPlayer.PlaySFXAtPosition(hitSFX, transform.position);
+        }
 
         //生成破坏的游戏对象版本
         if (destroyedGO!=null)
@@ -33,7 +37,7 @@ public class BreakableObject : MonoBehaviour,IDamagable<DamageObject>
             GameObject brokenGO = GameObject.Instantiate(destroyedGO);
             brokenGO.transform.position = transform.position;
 
-            //基于影响方向的机会方向
+            //基于影响方向
             if (orientToImpactDir&&damageObject.inflictor!=null)
             {
                 float dir = Mathf.Sign(damageObject.inflictor.transform.position.x - transform.position.x);

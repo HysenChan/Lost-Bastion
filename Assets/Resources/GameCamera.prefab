@@ -47,14 +47,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   heightOffset: -2.5
-  distanceToTarget: 10
+  distanceToTarget: 12
   viewAngle: -6.3
   FollowZAxis: 1
   AdditionalOffset: {x: 0, y: 0, z: 0}
   DampX: 3
   DampY: 2
   DampZ: 3
-  MinLeft: 10.7
+  MinLeft: 70
   MaxRight: -11.5
   UseWaveAreaCollider: 1
   CurrentAreaCollider: {fileID: 0}

@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerState))]
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour,IDamagable<DamageObject>
 {
     [Header("Linked Components")]
     public Transform weaponBone; //将武器作为骨骼的Parents(手掌)
@@ -795,7 +795,7 @@ public class PlayerCombat : MonoBehaviour
         //当角色碰到东西时才继续连击
         if (comboContinueOnHit&&!targetHit)
         {
-            continuePunchCombo = continuePunchCombo = false;
+            continuePunchCombo = continueKickCombo = false;
             lastAttackTime = 0;
         }
 
@@ -832,7 +832,7 @@ public class PlayerCombat : MonoBehaviour
             }
             if (KickCombo[attackNum]!=null&&PunchCombo[attackNum].animTrigger.Length>0)
             {
-                DoAttack(PunchCombo[attackNum], PLAYERSTATE.KICK, INPUTACTION.KICK);
+                DoAttack(KickCombo[attackNum], PLAYERSTATE.KICK, INPUTACTION.KICK);
             }
             return;
         }
@@ -896,7 +896,30 @@ public class PlayerCombat : MonoBehaviour
     {
         float distance = GroundAttackDistance;
         GameObject closestEnemy = null;
-        //TODO:敌人处于击倒状态
+        //敌人处于击倒状态
+        foreach (GameObject enemy in EnemyManager.activeEnemies)
+        {
+            //只检查角色面前的敌人
+            if (IsFacingTarget(enemy))
+            {
+                //寻找最近的敌人
+                float dist2enemy = (enemy.transform.position - transform.position).magnitude;
+                if (dist2enemy < distance)
+                {
+                    distance = dist2enemy;
+                    closestEnemy = enemy;
+                }
+            }
+        }
+
+        if (closestEnemy != null)
+        {
+            EnemyAI AI = closestEnemy.GetComponent<EnemyAI>();
+            if (AI != null && AI.enemyState == PLAYERSTATE.KNOCKDOWNGROUNDED)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -945,9 +968,11 @@ public class PlayerCombat : MonoBehaviour
             playerAnimator.StopAllCoroutines();
             CancelInvoke();
             SetVelocity(Vector3.zero);
-            //TODO:死亡音乐
+            //玩家死亡音乐
+            GlobalAudioPlayer.PlaySFXAtPosition(DeathVoiceSFX, transform.position + Vector3.up);
             playerAnimator.SetAnimatorBool("Death", true);
-            //TODO:敌人管理
+            //敌人AI处理
+            EnemyManager.PlayerHasDied();
             StartCoroutine(ReStartLevel());
         }
     }

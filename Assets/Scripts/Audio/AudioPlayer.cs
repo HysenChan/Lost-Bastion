@@ -58,8 +58,6 @@ public class AudioPlayer : MonoBehaviour
         {
             if (s.name == name)
             {
-
-                //check the time threshold
                 if (Time.time - s.lastTimePlayed < s.MinTimeBetweenCall)
                 {
                     return;
@@ -69,17 +67,17 @@ public class AudioPlayer : MonoBehaviour
                     s.lastTimePlayed = Time.time;
                 }
 
-                //pick a random number
+                //选择一个随机数
                 int rand = Random.Range(0, s.clip.Length);
 
-                //create gameobject for the audioSource
+                //为audioSource创建gameobject对象
                 GameObject audioObj = new GameObject();
                 audioObj.transform.parent = parent;
                 audioObj.name = name;
                 audioObj.transform.position = worldPosition;
                 AudioSource audiosource = audioObj.AddComponent<AudioSource>();
 
-                //audio source settings
+                //音源设置
                 audiosource.clip = s.clip[rand];
                 audiosource.spatialBlend = 1.0f;
                 audiosource.minDistance = 4f;
@@ -88,7 +86,7 @@ public class AudioPlayer : MonoBehaviour
                 audiosource.loop = s.loop;
                 audiosource.Play();
 
-                //Destroy on finish
+                //完成时销毁
                 if (!s.loop && audiosource.clip != null)
                 {
                     TimeToLive TTL = audioObj.AddComponent<TimeToLive>();
@@ -97,7 +95,10 @@ public class AudioPlayer : MonoBehaviour
                 SFXFound = true;
             }
         }
-        if (!SFXFound) Debug.Log("no sfx found with name: " + name);
+        if (!SFXFound)
+        {
+            Debug.Log("找不到该音效："+name);
+        }
     }
 
     public void playSFXAtPosition(string name, Vector3 worldPosition)

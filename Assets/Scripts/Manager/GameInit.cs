@@ -38,15 +38,38 @@ public class GameInit : MonoBehaviour
             GameObject.Instantiate(Resources.Load("GameCamera"), Vector3.zero, Quaternion.identity);
         }
 
-        //开始游戏打开菜单
+        //创建游戏音效
+        if (!GameObject.FindObjectOfType<AudioPlayer>() && createAudioPlayer)
+        {
+            audioPlayer = GameObject.Instantiate(Resources.Load("AudioPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
+        }
+
+        //开始游戏背景音乐
+        if (playMusic&&createAudioPlayer)
+        {
+            Invoke("PlayMusic", 1f);
+        }
+
+        //TODO:开始游戏打开菜单
         //if (!string.IsNullOrEmpty(showMenuAtStart))
         //{
         //    ShowStartMenu();
         //}
     }
 
+    /// <summary>
+    /// 播放背景音乐
+    /// </summary>
+    private void PlayMusic()
+    {
+        if (audioPlayer!=null)
+        {
+            audioPlayer.GetComponent<AudioPlayer>().playMusic(LevelMusic);
+        }
+    }
+
     //开始游戏菜单
-    void ShowStartMenu()
+    private void ShowStartMenu()
     {
         
     }

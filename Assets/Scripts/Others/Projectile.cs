@@ -28,20 +28,17 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// 子弹的触发效果
     /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other)
+    /// <param name="col"></param>
+    void OnTriggerEnter(Collider coll)
     {
-        if (other.CompareTag("Enemy"))
+        if (coll.CompareTag("Enemy"))
         {
-            //击中一个敌人对象
-            IDamagable<DamageObject> damagableObject = other.GetComponent(typeof(IDamagable<DamageObject>)) as IDamagable<DamageObject>;
-            if (damagableObject!=null)
+            IDamagable<DamageObject> damagableObject = coll.GetComponent(typeof(IDamagable<DamageObject>)) as IDamagable<DamageObject>;
+            if (damagableObject != null)
             {
                 damagableObject.Hit(damage);
                 if (destroyOnHit)
-                {
                     Destroy(gameObject);
-                }
             }
         }
     }
