@@ -896,7 +896,30 @@ public class PlayerCombat : MonoBehaviour
     {
         float distance = GroundAttackDistance;
         GameObject closestEnemy = null;
-        //TODO:敌人处于击倒状态
+        //敌人处于击倒状态
+        foreach (GameObject enemy in EnemyManager.activeEnemies)
+        {
+            //只检查角色面前的敌人
+            if (IsFacingTarget(enemy))
+            {
+                //寻找最近的敌人
+                float dist2enemy = (enemy.transform.position - transform.position).magnitude;
+                if (dist2enemy < distance)
+                {
+                    distance = dist2enemy;
+                    closestEnemy = enemy;
+                }
+            }
+        }
+
+        if (closestEnemy != null)
+        {
+            EnemyAI AI = closestEnemy.GetComponent<EnemyAI>();
+            if (AI != null && AI.enemyState == PLAYERSTATE.KNOCKDOWNGROUNDED)
+            {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -945,9 +968,11 @@ public class PlayerCombat : MonoBehaviour
             playerAnimator.StopAllCoroutines();
             CancelInvoke();
             SetVelocity(Vector3.zero);
-            //TODO:死亡音乐
+            //玩家死亡音乐
+            GlobalAudioPlayer.PlaySFXAtPosition(DeathVoiceSFX, transform.position + Vector3.up);
             playerAnimator.SetAnimatorBool("Death", true);
-            //TODO:敌人管理
+            //敌人AI处理
+            EnemyManager.PlayerHasDied();
             StartCoroutine(ReStartLevel());
         }
     }

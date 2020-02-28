@@ -64,7 +64,7 @@ public class PlayerAnimator : MonoBehaviour
         }
         else
         {
-            //TODO:敌人AI
+            transform.parent.GetComponent<EnemyAI>().Ready();
         }
     }
 
@@ -83,12 +83,21 @@ public class PlayerAnimator : MonoBehaviour
             }
             else
             {
-                Debug.Log("找不到组件 '" + transform.parent.name + "'.");
+                Debug.Log(transform.parent.name+"找不到PlayerCombat组件.");
             }
         }
         else
         {
-            //TODO:检查AI是否击中
+            //检查AI是否击中
+            EnemyAI enemyAI = transform.parent.GetComponent<EnemyAI>();
+            if (enemyAI!=null)
+            {
+                enemyAI.CheckForHit();
+            }
+            else
+            {
+                Debug.Log(transform.parent.name + "找不到EnemyAI组件.");
+            }
         }
     }
 
