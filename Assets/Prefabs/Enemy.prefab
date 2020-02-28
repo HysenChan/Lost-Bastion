@@ -105,7 +105,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1027917220076984}
-  m_Material: {fileID: 13400000, guid: c3496fc1bd7a3d140810de56cc293ce6, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1027917220076984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b93609eb4825f64cb89f74fdc2f8df7, type: 3}
+  m_Script: {fileID: 11500000, guid: 193755aa5f647d04f820fc032f6c77a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHp: 20
@@ -152,17 +152,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1027917220076984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05e7ea3bbb926734b9a4bd0b4d3ccc10, type: 3}
+  m_Script: {fileID: 11500000, guid: e5c9bd73c0fea534abadcd40ac004b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  animator: {fileID: 114066151113817654}
+  playerAnimator: {fileID: 114066151113817654}
   GFX: {fileID: 1613060455066262}
   rb: {fileID: 54021038908083726}
   capsule: {fileID: 136111728432853532}
   AttackList:
   - animTrigger: Attack1
-    damage: 1
+    damageCount: 1
     duration: 1
     comboResetTime: 0.5
     hitSFX: DefaultHit
@@ -175,7 +175,7 @@ MonoBehaviour:
     collHeight: 1.4
     inflictor: {fileID: 0}
   - animTrigger: Attack2
-    damage: 2
+    damageCount: 2
     duration: 1
     comboResetTime: 0.5
     hitSFX: DefaultHit
@@ -188,7 +188,7 @@ MonoBehaviour:
     collHeight: 1.4
     inflictor: {fileID: 0}
   - animTrigger: Attack3
-    damage: 2
+    damageCount: 2
     duration: 1
     comboResetTime: 0.5
     hitSFX: DefaultHit
@@ -206,7 +206,7 @@ MonoBehaviour:
   hitRecoveryTime: 0.4
   standUpTime: 0.8
   canDefendDuringAttack: 1
-  AttackPlayerAirborne: 0
+  AttackPlayerAirborne: 1
   canHitEnemies: 0
   canHitDestroyableObjects: 0
   lastAttackTime: 0
@@ -232,14 +232,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2048
   randomizeValues: 1
-  zSpreadMultiplier: 1.5
+  zSpreadMultiplier: 2
   range: 0
   enemyTactic: 0
   enemyState: 0
   currentDirection: 1
   targetSpotted: 0
-  cliffSpotted: 0
   wallspotted: 0
+  cliffSpotted: 0
   isGrounded: 0
   isDead: 0
   distance: 0
@@ -1958,10 +1958,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1613060455066262}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3823eadb584051942908677b03d951e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 6bc8978e290609e428ff04e759dc38c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentDirection: -1
+  currentDirection: 0
   DustEffectLand: {fileID: 115594, guid: 6c925d90c8ae6b148b428e7fe79c3f71, type: 3}
   DustEffectJump: {fileID: 1350558754252556, guid: aa01e8fe85c4b55498cb17f0e85d5b2f,
     type: 3}
@@ -2628,7 +2628,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1929304379585312}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28e08a32c1d361e4daa2d27e5fddd9c5, type: 3}
+  m_Script: {fileID: 11500000, guid: a6dfba07efddaff4da92ea785c7d577d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FollowBone: {fileID: 0}
