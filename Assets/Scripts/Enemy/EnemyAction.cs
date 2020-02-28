@@ -8,7 +8,7 @@ public class EnemyAction : MonoBehaviour
 {
     [Header("Linked components")]
     public GameObject target; //当前目标
-    public PlayerAnimator playerAnimator; //玩家动画控制器组件
+    public PlayerAnimator playerAnimator; //动画控制器组件
     public GameObject GFX; //音效
     public Rigidbody rb; //刚体组件
     public CapsuleCollider capsule; //胶囊碰撞盒

@@ -161,9 +161,9 @@ MonoBehaviour:
     damageObject:
       animTrigger: ThrowWeapon
       damageCount: 6
-      duration: 0.3
+      duration: 1
       comboResetTime: 0
-      hitSFX: KnifeHit
+      hitSFX: Whoosh
       knockDown: 1
       slowMotionEffect: 0
       DefenceOverride: 1
@@ -172,7 +172,7 @@ MonoBehaviour:
       collDistance: 0
       collHeight: 1.5
       inflictor: {fileID: 0}
-    useSound: 
+    useSound: Whoosh
     breakSound: 
   SFX: ItemPickup
   pickupEffect: {fileID: 0}

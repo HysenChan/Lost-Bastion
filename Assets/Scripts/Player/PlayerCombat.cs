@@ -5,7 +5,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(PlayerState))]
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : MonoBehaviour,IDamagable<DamageObject>
 {
     [Header("Linked Components")]
     public Transform weaponBone; //将武器作为骨骼的Parents(手掌)
@@ -832,7 +832,7 @@ public class PlayerCombat : MonoBehaviour
             }
             if (KickCombo[attackNum]!=null&&PunchCombo[attackNum].animTrigger.Length>0)
             {
-                DoAttack(PunchCombo[attackNum], PLAYERSTATE.KICK, INPUTACTION.KICK);
+                DoAttack(KickCombo[attackNum], PLAYERSTATE.KICK, INPUTACTION.KICK);
             }
             return;
         }
