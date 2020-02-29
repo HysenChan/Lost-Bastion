@@ -36,19 +36,22 @@ public class UICharSelectionPortrait : MonoBehaviour, IPointerEnterHandler, IPoi
 
     public void Select()
     {
-        if (Border && !Selected) Border.color = BorderColorOver;
+        if (Border && !Selected)
+            Border.color = BorderColorOver;
     }
 
     public void Deselect()
     {
-        if (Border && !Selected) Border.color = BorderColorDefault;
+        if (Border && !Selected)
+            Border.color = BorderColorDefault;
     }
 
     public void OnClick()
     {
         ResetAllButtons();
         Selected = true;
-        if (Border) Border.color = BorderColorHighlight;
+        if (Border)
+            Border.color = BorderColorHighlight;
 
         //播放点击音效
         GlobalAudioPlayer.PlaySFX(PlaySFXOnClick);

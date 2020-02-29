@@ -7,7 +7,7 @@ public class CharSelection : MonoBehaviour
 {
     public GameObject ContinueButton;
     public string ContinueButtonSFXOnClick = "";
-    public string loadLevelOnExit = "GameMenu";
+    public string loadLevel = "GameMenu";
     private bool rightButtonDown;
     private bool leftButtonDown;
     private UICharSelectionPortrait[] portraits;
@@ -71,9 +71,9 @@ public class CharSelection : MonoBehaviour
     /// </summary>
     void LoadLevel()
     {
-        if (!string.IsNullOrEmpty(loadLevelOnExit))
+        if (!string.IsNullOrEmpty(loadLevel))
         {
-            SceneManager.LoadScene(loadLevelOnExit);
+            SceneManager.LoadScene(loadLevel);
         }
         else
         {

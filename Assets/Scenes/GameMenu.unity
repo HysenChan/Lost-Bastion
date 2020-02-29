@@ -142,11 +142,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelMusic: Music
-  showMenuAtStart: 
+  showMenuAtStart: HUD
   playMusic: 0
   createUI: 1
-  createInputManager: 1
-  createAudioPlayer: 1
+  createInputManager: 0
+  createAudioPlayer: 0
   createGameCamera: 0
 --- !u!4 &504412203
 Transform:
