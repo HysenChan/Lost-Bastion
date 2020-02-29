@@ -4540,7 +4540,7 @@ MonoBehaviour:
     damageCount: 3
     duration: 1
     comboResetTime: 0
-    hitSFX: Defaulthit
+    hitSFX: DefaultHit
     knockDown: 1
     slowMotionEffect: 1
     DefenceOverride: 1
