@@ -55,7 +55,8 @@ public class UICharSelectionPortrait : MonoBehaviour, IPointerEnterHandler, IPoi
 
         //设置两个角色的预制体
         CharSelection Cs = GameObject.FindObjectOfType<CharSelection>();
-        if (Cs) Cs.SelectPlayer(PlayerPrefab);
+        if (Cs)
+            Cs.SelectPlayer(PlayerPrefab);
 
         //为此玩家设置平视显示器图标
         GlobalPlayerData.PlayerHUDProtrait = HUDPortrait;

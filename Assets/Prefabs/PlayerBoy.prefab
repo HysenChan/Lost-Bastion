@@ -4428,11 +4428,11 @@ MonoBehaviour:
   resetComboChainOnChangeCombo: 0
   invulnerableDuringJump: 1
   canTurnWhileDefending: 0
-  hitRecoveryTime: 0.9
+  hitRecoveryTime: 0.4
   hitThreshold: 0.86
   hitKnockBackForce: 1.5
   GroundAttackDistance: 1.4
-  knockdownHitCount: 3
+  knockdownHitCount: 2
   KnockdownTimeout: 0
   KnockdownUpForce: 5
   KnockbackForce: 4

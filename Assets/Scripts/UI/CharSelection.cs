@@ -7,7 +7,7 @@ public class CharSelection : MonoBehaviour
 {
     public GameObject ContinueButton;
     public string ContinueButtonSFXOnClick = "";
-    public string loadLevelOnExit = "Level1";
+    public string loadLevelOnExit = "GameMenu";
     private bool rightButtonDown;
     private bool leftButtonDown;
     private UICharSelectionPortrait[] portraits;
@@ -16,7 +16,8 @@ public class CharSelection : MonoBehaviour
     {
         InputManager.onMoveInputEvent += InputEvent;
         InputManager.onCombatInputEvent += CombatInputEvent;
-        if (ContinueButton) ContinueButton.SetActive(false);
+        if (ContinueButton)
+            ContinueButton.SetActive(false);
     }
 
     void OnDisable()
