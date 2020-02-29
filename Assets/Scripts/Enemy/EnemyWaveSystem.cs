@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyWaveSystem : MonoBehaviour
 {
@@ -17,6 +18,16 @@ public class EnemyWaveSystem : MonoBehaviour
     [Header("Load level On Finish")]
     public bool loadNewLevel;//判断是否加载新关卡
     public string levelName;//新关卡的名称
+
+    void OnEnable()
+    {
+        EnemyAction.OnUnitDestroy += OnUnitDestroy;
+    }
+
+    void OnDisable()
+    {
+        EnemyAction.OnUnitDestroy -= OnUnitDestroy;
+    }
 
     private void Awake()
     {
@@ -196,42 +207,38 @@ public class EnemyWaveSystem : MonoBehaviour
             }
         }
 
-        //Timeout before continuing
+        //进入下一关等待时间
         yield return new WaitForSeconds(1f);
 
-        //TODO:完成关卡后调用UI
+        //完成关卡后调用UI
 
-        ////Fade to black
-        //UIManager UI = GameObject.FindObjectOfType<UIManager>();
-        //if (UI != null)
-        //{
-        //    UI.UI_fader.Fade(UIFader.FADE.FadeOut, 2f, 0);
-        //    yield return new WaitForSeconds(2f);
-        //}
+        UIManager UI = GameObject.FindObjectOfType<UIManager>();
+        if (UI != null)
+        {
+            UI.UI_fader.Fade(UIFader.FADE.FadeOut, 2f, 0);
+            yield return new WaitForSeconds(2f);
+        }
 
-        ////Disable players
-        //GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        //foreach (GameObject p in players)
-        //{
-        //    Destroy(p);
-        //}
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject p in players)
+        {
+            Destroy(p);
+        }
 
-        ////Go to next level or show GAMEOVER screen
-        //if (loadNewLevel)
-        //{
-        //    if (levelName != "")
-        //        SceneManager.LoadScene(levelName);
-
-        //}
-        //else
-        //{
-
-        //    //Show game over screen
-        //    if (UI != null)
-        //    {
-        //        UI.DisableAllScreens();
-        //        UI.ShowMenu("LevelComplete");
-        //    }
-        //}
+        //进入下一关
+        if (loadNewLevel)
+        {
+            if (levelName != "")
+                SceneManager.LoadScene(levelName);
+        }
+        else
+        {
+            //展示游戏结束界面
+            if (UI != null)
+            {
+                UI.DisableAllScreens();
+                UI.ShowMenu("LevelComplete");
+            }
+        }
     }
 }
