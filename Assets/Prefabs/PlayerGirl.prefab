@@ -902,7 +902,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 3
   ZSpeed: 4
-  jumpForce: 8
+  jumpForce: 7
   AllowAirControl: 1
   AllowDepthJumping: 1
   AirAcceleration: 8

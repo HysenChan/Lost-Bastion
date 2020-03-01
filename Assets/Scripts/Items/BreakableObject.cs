@@ -13,7 +13,8 @@ public class BreakableObject : MonoBehaviour,IDamagable<DamageObject>
 
     [Header("Spawn an item")]
     public GameObject spawnItem;
-    public float spawnChance = 100;
+    [Range(0f,100f)]
+    public float spawnChance = 25;
 
     [Space(10)]
     public bool destroyOnHit;
