@@ -1219,8 +1219,8 @@ MonoBehaviour:
   currentWave: 0
   activateSlowMotionOnLastHit: 1
   effectDuration: 1.5
-  loadNewLevel: 0
-  levelName: 
+  loadNewLevel: 1
+  levelName: Level2
 --- !u!4 &1367135724
 Transform:
   m_ObjectHideFlags: 0

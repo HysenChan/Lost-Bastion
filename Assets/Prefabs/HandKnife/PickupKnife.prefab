@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 54325476534827754}
   - component: {fileID: 114318463254527000}
   m_Layer: 10
-  m_Name: PickupBaseballBat
+  m_Name: PickupKnife
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ MonoBehaviour:
       type: 3}
     WeaponEndState: {fileID: 1241872331814296, guid: 7a80c159a555c164aa993a5d17a03ef5,
       type: 3}
-    timesToUse: 3
+    timesToUse: 4
     damageType: 1
     damageObject:
       animTrigger: SwingWeapon
