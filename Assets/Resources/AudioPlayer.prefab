@@ -256,12 +256,12 @@ MonoBehaviour:
     clip:
     - {fileID: 8300000, guid: d9f55764a95aa164882c8b163a58265a, type: 3}
     lastTimePlayed: 0
-  - name: BaseballBatHit
+  - name: KnifeHit
     volume: 1
     MinTimeBetweenCall: 0
     loop: 0
     clip:
-    - {fileID: 8300000, guid: 4c87943edf2fbd04a8d2dc52feab7bc7, type: 3}
+    - {fileID: 8300000, guid: 21e041fb97aeb1d42a574188da5b7ddc, type: 3}
     lastTimePlayed: 0
   - name: BaseballBatBreak
     volume: 1
@@ -269,6 +269,13 @@ MonoBehaviour:
     loop: 0
     clip:
     - {fileID: 8300000, guid: b694c0b5441521746a2b5319cf14f694, type: 3}
+    lastTimePlayed: 0
+  - name: DefaultGirlHit
+    volume: 1
+    MinTimeBetweenCall: 0
+    loop: 0
+    clip:
+    - {fileID: 8300000, guid: 538bd680558b1bc42a8a2a452f3939de, type: 3}
     lastTimePlayed: 0
 --- !u!82 &8206434
 AudioSource:

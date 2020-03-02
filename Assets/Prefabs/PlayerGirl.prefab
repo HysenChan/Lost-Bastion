@@ -853,7 +853,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216528722486240}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 57106a7d22877fb4cad9080df2a78c01, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.3
@@ -901,14 +901,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 3
-  ZSpeed: 4
+  ZSpeed: 3
   jumpForce: 7
   AllowAirControl: 1
   AllowDepthJumping: 1
   AirAcceleration: 8
   AirMaxSpeed: 3
   rotationSpeed: 10
-  jumpRotationSpeed: 8
+  jumpRotationSpeed: 10
   lookAheadDistance: 0.4
   landRecoveryTime: 0.1
   CollisionLayer:
@@ -957,7 +957,7 @@ MonoBehaviour:
     damageCount: 3
     duration: 0.22
     comboResetTime: 0.35
-    hitSFX: DefaultHit
+    hitSFX: DefaultGirlHit
     knockDown: 0
     slowMotionEffect: 0
     DefenceOverride: 0
@@ -970,7 +970,7 @@ MonoBehaviour:
     damageCount: 3
     duration: 0.3
     comboResetTime: 0.35
-    hitSFX: DefaultHit
+    hitSFX: DefaultGirlHit
     knockDown: 0
     slowMotionEffect: 0
     DefenceOverride: 0
@@ -997,7 +997,7 @@ MonoBehaviour:
     damageCount: 3
     duration: 0.45
     comboResetTime: 0.35
-    hitSFX: DefaultHit
+    hitSFX: DefaultGirlHit
     knockDown: 0
     slowMotionEffect: 0
     DefenceOverride: 0
@@ -1052,7 +1052,7 @@ MonoBehaviour:
     damageCount: 3
     duration: 1
     comboResetTime: 0
-    hitSFX: HeavyKick
+    hitSFX: DefaultGirlHit
     knockDown: 1
     slowMotionEffect: 1
     DefenceOverride: 1

@@ -87,7 +87,7 @@ MonoBehaviour:
       damageCount: 6
       duration: 0.5
       comboResetTime: 0
-      hitSFX: BaseballBatHit
+      hitSFX: KnifeHit
       knockDown: 1
       slowMotionEffect: 0
       DefenceOverride: 1
