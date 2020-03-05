@@ -144,7 +144,7 @@ MonoBehaviour:
   LevelMusic: Music
   showMenuAtStart: HUD
   playMusic: 0
-  createUI: 1
+  createUI: 0
   createInputManager: 0
   createAudioPlayer: 0
   createGameCamera: 0

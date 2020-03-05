@@ -4373,8 +4373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193755aa5f647d04f820fc032f6c77a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 100
-  CurrentHp: 100
+  MaxHp: 50
+  CurrentHp: 50
   invulnerable: 0
 --- !u!114 &1281002535797814508
 MonoBehaviour:

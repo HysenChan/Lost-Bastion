@@ -1418,7 +1418,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\u8FD9\u662F\u4E0B\u4E00\u5173\u7684\u8FC7\u6E21\u52A8\u753B"
+  m_Text: "\u606D\u559C\u4F60\uFF0C\u6240\u6709\u5173\u5361\u5DF2\u5B8C\u6210\uFF01"
 --- !u!114 &114000011908315582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2966,7 +2966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ContinueButton: {fileID: 1632187805677648}
   ContinueButtonSFXOnClick: ItemPickup
-  loadLevelOnExit: Game
+  loadLevel: LoadingScene
 --- !u!1 &1410395097083066
 GameObject:
   m_ObjectHideFlags: 0
