@@ -84,13 +84,13 @@ using System.Collections;
                     UpdatePatrolState();
                     break;
                 case FSMState.Chase:
-                    UpdateChaseState();
+                    //UpdateChaseState();
                     break;
                 case FSMState.Attack:
-                    UpdateAttackState();
+                    //UpdateAttackState();
                     break;
                 case FSMState.Dead:
-                    UpdateDeadState();
+                    //UpdateDeadState();
                     break;
             }
 
@@ -118,9 +118,14 @@ using System.Collections;
                 curState = FSMState.Chase;
             }
 
-            //Rotate to the target point
-            Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * curRotSpeed);
+        //Rotate to the target point
+        Vector3 tmpVc3 = destPos - transform.position;
+        Vector3 rotateVc3 = Quaternion.AngleAxis(-90, Vector3.up) * tmpVc3;
+        tmpVc3.y = transform.position.y;
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(rotateVc3), Time.deltaTime * curRotSpeed);
+
+            //Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * curRotSpeed);
 
             //Go Forward
             controller.Move(transform.forward * Time.deltaTime * walkSpeed);
@@ -131,98 +136,100 @@ using System.Collections;
         }
 
 
-        protected void UpdateChaseState()
-        {
-            //Set target position as the player position
-            destPos = playerTransform.position;
+        //protected void UpdateChaseState()
+        //{
+        //    //Set target position as the player position
+        //    destPos = playerTransform.position;
 
-            //Check the distance with player when in a range, change to attack state
-            //Go back to patrol if it becomes too far
-            float dist = Vector3.Distance(transform.position, playerTransform.position);
+        //    //Check the distance with player when in a range, change to attack state
+        //    //Go back to patrol if it becomes too far
+        //    float dist = Vector3.Distance(transform.position, playerTransform.position);
 
-            if (dist <= attackDistance)
-            {
-                curState = FSMState.Attack;
-            }
-            else if (dist >= chaseDistance)
-            {
-                curState = FSMState.Patrol;
-            }
+        //    if (dist <= attackDistance)
+        //    {
+        //        curState = FSMState.Attack;
+        //    }
+        //    else if (dist >= chaseDistance)
+        //    {
+        //        curState = FSMState.Patrol;
+        //    }
 
-            //Rotate to the target point
-            Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * curRotSpeed);
+        ////Rotate to the target point
+        ////Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position);
+        //Quaternion targetRotation = Quaternion.LookRotation(destPos - transform.position + new Vector3(90, 0, 0));
+        //transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * curRotSpeed);
 
-            //Go Forward
-            controller.Move(transform.forward * Time.deltaTime * runSpeed);
+        //    //Go Forward
+        //    controller.Move(transform.forward * Time.deltaTime * runSpeed);
 
-            //rb.MovePosition(new Vector3(0,0,0) * Time.deltaTime * walkSpeed);
-            //rigidbody.MovePosition(transform.position + transform.forward * Time.deltaTime);
-            //rigidbody.MoveRotation(targetRotation);
+        //    //rb.MovePosition(new Vector3(0,0,0) * Time.deltaTime * walkSpeed);
+        //    //rigidbody.MovePosition(transform.position + transform.forward * Time.deltaTime);
+        //    //rigidbody.MoveRotation(targetRotation);
 
-            //animComponent.CrossFade("Run");
+        //    //animComponent.CrossFade("Run");
 
-        }
+        //}
 
-        protected void UpdateAttackState()
-        {
-            Quaternion targetRotation;
+        //protected void UpdateAttackState()
+        //{
+        //    Quaternion targetRotation;
 
-            //Set target position as the player position
-            destPos = playerTransform.position;
+        //    //Set target position as the player position
+        //    destPos = playerTransform.position;
 
-            //Check the distance with player when in a range, change to attack state
-            float dist = Vector3.Distance(transform.position, playerTransform.position);
+        //    //Check the distance with player when in a range, change to attack state
+        //    float dist = Vector3.Distance(transform.position, playerTransform.position);
 
-            if (dist >= attackDistance && dist < chaseDistance)
-            {
-                curState = FSMState.Chase;//FSMState.Attack;
-                return;
-            }
-            else if (dist >= chaseDistance)  //change to patrol state if too far
-            {
-                curState = FSMState.Patrol;
-                return;
-            }
+        //    if (dist >= attackDistance && dist < chaseDistance)
+        //    {
+        //        curState = FSMState.Chase;//FSMState.Attack;
+        //        return;
+        //    }
+        //    else if (dist >= chaseDistance)  //change to patrol state if too far
+        //    {
+        //        curState = FSMState.Patrol;
+        //        return;
+        //    }
 
-            targetRotation = Quaternion.LookRotation(destPos - transform.position);
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * curRotSpeed);
+        ////targetRotation = Quaternion.LookRotation(destPos - transform.position);
+        //    targetRotation = Quaternion.LookRotation(destPos - transform.position + new Vector3(90,0, 0));
+        //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * curRotSpeed);
 
-            ShootBullet();
+        //    ShootBullet();
 
-            //animComponent.CrossFade("StandingFire");
-        }
+        //    //animComponent.CrossFade("StandingFire");
+        //}
 
-        private void ShootBullet()
-        {
-            if (elapsedTime >= shootRate)
-            {
-                //GameObject bulletObj = Instantiate(Bullet, bulletSpawnPoint.position, transform.rotation) as GameObject;
-                //bulletObj.GetComponent<Bullet>().Go();
-                elapsedTime = 0.0f;
-            }
-        }
-
-
-        protected void UpdateDeadState()
-        {
-            //Play dead animation
-            if (!bDead)
-            {
-                bDead = true;
-                //animComponent.CrossFade("death");
-            }
-        }
+        //private void ShootBullet()
+        //{
+        //    if (elapsedTime >= shootRate)
+        //    {
+        //        //GameObject bulletObj = Instantiate(Bullet, bulletSpawnPoint.position, transform.rotation) as GameObject;
+        //        //bulletObj.GetComponent<Bullet>().Go();
+        //        elapsedTime = 0.0f;
+        //    }
+        //}
 
 
-        void onCollisionEnter(Collision collision)
-        {
-            //Reduce health
-            if (collision.gameObject.tag == "Bullet")
-            {
-                //health -= collision.gameObject.GetComponent<Bullet>().damage;
-            }
-        }
+        //protected void UpdateDeadState()
+        //{
+        //    //Play dead animation
+        //    if (!bDead)
+        //    {
+        //        bDead = true;
+        //        //animComponent.CrossFade("death");
+        //    }
+        //}
+
+
+        //void onCollisionEnter(Collision collision)
+        //{
+        //    //Reduce health
+        //    if (collision.gameObject.tag == "Bullet")
+        //    {
+        //        //health -= collision.gameObject.GetComponent<Bullet>().damage;
+        //    }
+        //}
 
 
         protected void FindNextPoint()
