@@ -638,10 +638,9 @@ public class EnemyAction : MonoBehaviour
     public void Ready()
     {
         enemyState = PLAYERSTATE.IDLE;
-        playerAnimator.SetAnimatorBool("Walk",true);
-        playerAnimator.SetAnimatorFloat("MovementSpeed", 1f);
-        //Move(Vector3.zero, 0f);
-        //gameObject.GetComponent<SimpleFSM>().enabled = true;
+        //playerAnimator.SetAnimatorTrigger("Idle");
+        //playerAnimator.SetAnimatorFloat("MovementSpeed", 0f);
+        Move(Vector3.zero, 0f);
     }
 
     /// <summary>

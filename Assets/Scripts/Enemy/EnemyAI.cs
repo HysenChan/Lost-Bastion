@@ -78,12 +78,12 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
     {
         LookAtTarget(target.transform);
 
-        if (range==RANGE.ATTACKRANGE)
+        if (range == RANGE.ATTACKRANGE)
         {
             //攻击目标
             if (!cliffSpotted)
             {
-                if (Time.time-lastAttackTime>attackInterval)
+                if (Time.time - lastAttackTime > attackInterval)
                 {
                     ATTACK();
                 }

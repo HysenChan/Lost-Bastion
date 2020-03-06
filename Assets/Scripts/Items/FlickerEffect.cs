@@ -29,7 +29,8 @@ public class FlickerEffect : MonoBehaviour
         {
             float speed = Mathf.Lerp(flickerSpeedStart, flickerSpeedEnd, MathUtilities.Coserp(0, 1, t));
             float i = Mathf.Sin(Time.time * speed);
-            foreach (GameObject g in GFX) g.SetActive(i > 0);
+            foreach (GameObject g in GFX)
+                g.SetActive(i > 0);
             t += Time.deltaTime / Duration;
             yield return null;
         }
