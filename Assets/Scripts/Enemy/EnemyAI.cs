@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : EnemyAction, IDamagable<DamageObject>
 {
     [Space(10)]
     public bool enableAI;
+
+    private SimpleFSM fsm;
 
     //执行AI的状态列表
     private List<PLAYERSTATE> ActiveAIStates = new List<PLAYERSTATE> {
@@ -15,6 +16,9 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
 
     private void Start()
     {
+        fsm = this.GetComponent<SimpleFSM>();
+        fsm.isPatrol = true;
+
         //将此敌人添加到敌人列表中
         EnemyManager.enemyList.Add(gameObject);
 
@@ -60,17 +64,31 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
         {
             if (ActiveAIStates.Contains(enemyState) && targetSpotted)
             {
-                //主动式AI
+                //主动式AI，追击攻击
                 AI();
             }
             else
             {
-                //尝试发现玩家
-                if (distanceToTarget.magnitude < sightDistance)
-                {
-                    targetSpotted = true;
-                }
             }
+
+
+            //尝试发现玩家
+            if (distanceToTarget.magnitude < sightDistance)
+            {
+                //发现玩家，开始追击
+                targetSpotted = true;
+
+                //停止巡逻
+                fsm.isPatrol = false;
+            }
+            else
+            {
+                //玩家逃逸，停止追击，开启巡逻
+                targetSpotted = false;
+                fsm.isPatrol = true;
+
+            }
+
         }
     }
 
@@ -78,12 +96,12 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
     {
         LookAtTarget(target.transform);
 
-        if (range==RANGE.ATTACKRANGE)
+        if (range == RANGE.ATTACKRANGE)
         {
             //攻击目标
             if (!cliffSpotted)
             {
-                if (Time.time-lastAttackTime>attackInterval)
+                if (Time.time - lastAttackTime > attackInterval)
                 {
                     ATTACK();
                 }
@@ -149,6 +167,10 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
             //距目标的距离
             distanceToTarget = target.transform.position - transform.position;
             distance = Vector3.Distance(target.transform.position, transform.position);
+            if (gameObject.name == "Enemy1")
+            {
+                // Debug.Log(gameObject.name + "计算距离是" + distanceToTarget.magnitude);
+            }
 
             float distX = Mathf.Abs(distanceToTarget.x);
             float distZ = Mathf.Abs(distanceToTarget.z);

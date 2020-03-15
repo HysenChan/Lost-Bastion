@@ -986,7 +986,14 @@ public class PlayerCombat : MonoBehaviour,IDamagable<DamageObject>
         yield return new WaitForSeconds(2);
         float fadeoutTime = 1.3f;
 
-        //TODO:UI管理
+        UIManager UI = GameObject.FindObjectOfType<UIManager>();
+        if (UI != null)
+        {
+            UI.UI_fader.Fade(UIFader.FADE.FadeOut, fadeoutTime, 0);
+            yield return new WaitForSeconds(fadeoutTime);
 
+            UI.DisableAllScreens();
+            UI.ShowMenu("GameOver");
+        }
     }
 }

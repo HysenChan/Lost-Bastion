@@ -637,9 +637,9 @@ public class EnemyAction : MonoBehaviour
     /// </summary>
     public void Ready()
     {
-        enemyState = PLAYERSTATE.IDLE;
+        enemyState = PLAYERSTATE.WALK;
         playerAnimator.SetAnimatorTrigger("Idle");
-        playerAnimator.SetAnimatorFloat("MovementSpeed", 0f);
+        playerAnimator.SetAnimatorFloat("MovementSpeed", 0.5f);
         Move(Vector3.zero, 0f);
     }
 

@@ -44,17 +44,21 @@ public class GameInit : MonoBehaviour
             audioPlayer = GameObject.Instantiate(Resources.Load("AudioPlayer"), Vector3.zero, Quaternion.identity) as GameObject;
         }
 
+        //创建UI
+        if (!GameObject.FindObjectOfType<UIManager>() && createUI)
+        {
+            GameObject.Instantiate(Resources.Load("UI"), Vector3.zero, Quaternion.identity);
+        }
+
         //开始游戏背景音乐
         if (playMusic&&createAudioPlayer)
         {
             Invoke("PlayMusic", 1f);
         }
 
-        //TODO:开始游戏打开菜单
-        //if (!string.IsNullOrEmpty(showMenuAtStart))
-        //{
-        //    ShowStartMenu();
-        //}
+        //开始游戏打开菜单
+        if (!string.IsNullOrEmpty(showMenuAtStart))
+            ShowStartMenu();
     }
 
     /// <summary>
@@ -68,9 +72,11 @@ public class GameInit : MonoBehaviour
         }
     }
 
-    //开始游戏菜单
+    /// <summary>
+    /// 开始游戏菜单
+    /// </summary>
     private void ShowStartMenu()
     {
-        
+        GameObject.FindObjectOfType<UIManager>().ShowMenu(showMenuAtStart);
     }
 }

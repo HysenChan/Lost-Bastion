@@ -4373,8 +4373,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 193755aa5f647d04f820fc032f6c77a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHp: 100
-  CurrentHp: 100
+  MaxHp: 50
+  CurrentHp: 50
   invulnerable: 0
 --- !u!114 &1281002535797814508
 MonoBehaviour:
@@ -4390,7 +4390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2.5
   ZSpeed: 2.5
-  jumpForce: 7
+  jumpForce: 6.8
   AllowAirControl: 1
   AllowDepthJumping: 1
   AirAcceleration: 8
@@ -4428,11 +4428,11 @@ MonoBehaviour:
   resetComboChainOnChangeCombo: 0
   invulnerableDuringJump: 1
   canTurnWhileDefending: 0
-  hitRecoveryTime: 0.9
+  hitRecoveryTime: 0.4
   hitThreshold: 0.86
   hitKnockBackForce: 1.5
   GroundAttackDistance: 1.4
-  knockdownHitCount: 3
+  knockdownHitCount: 2
   KnockdownTimeout: 0
   KnockdownUpForce: 5
   KnockbackForce: 4
@@ -4458,7 +4458,7 @@ MonoBehaviour:
     damageCount: 2
     duration: 0.3
     comboResetTime: 0.35
-    hitSFX: Defaulthit
+    hitSFX: DefaultHit
     knockDown: 0
     slowMotionEffect: 0
     DefenceOverride: 0
@@ -4540,7 +4540,7 @@ MonoBehaviour:
     damageCount: 3
     duration: 1
     comboResetTime: 0
-    hitSFX: Defaulthit
+    hitSFX: DefaultHit
     knockDown: 1
     slowMotionEffect: 1
     DefenceOverride: 1
