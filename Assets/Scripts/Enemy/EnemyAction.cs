@@ -639,7 +639,7 @@ public class EnemyAction : MonoBehaviour
     {
         enemyState = PLAYERSTATE.WALK;
         playerAnimator.SetAnimatorTrigger("Idle");
-        playerAnimator.SetAnimatorFloat("MovementSpeed", 0f);
+        playerAnimator.SetAnimatorFloat("MovementSpeed", 0.5f);
         Move(Vector3.zero, 0f);
     }
 

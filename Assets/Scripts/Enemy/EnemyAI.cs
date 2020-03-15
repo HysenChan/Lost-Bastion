@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyAI : EnemyAction, IDamagable<DamageObject>
@@ -17,7 +16,6 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
 
     private void Start()
     {
-        //初始化赋值
         fsm = this.GetComponent<SimpleFSM>();
         fsm.isPatrol = true;
 
@@ -88,7 +86,9 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
                 //玩家逃逸，停止追击，开启巡逻
                 targetSpotted = false;
                 fsm.isPatrol = true;
+
             }
+
         }
     }
 
@@ -167,6 +167,10 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
             //距目标的距离
             distanceToTarget = target.transform.position - transform.position;
             distance = Vector3.Distance(target.transform.position, transform.position);
+            if (gameObject.name == "Enemy1")
+            {
+                // Debug.Log(gameObject.name + "计算距离是" + distanceToTarget.magnitude);
+            }
 
             float distX = Mathf.Abs(distanceToTarget.x);
             float distZ = Mathf.Abs(distanceToTarget.z);

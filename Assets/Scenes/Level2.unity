@@ -295,6 +295,11 @@ PrefabInstance:
       propertyPath: CurrentHp
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 5487028429824936362, guid: 1a773db7544188641829a0a8d97643f0,
+        type: 3}
+      propertyPath: sightDistance
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a773db7544188641829a0a8d97643f0, type: 3}
 --- !u!1 &129660299 stripped
@@ -536,6 +541,11 @@ PrefabInstance:
       propertyPath: canHitDestroyableObjects
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
 --- !u!4 &156476493 stripped
@@ -770,6 +780,11 @@ PrefabInstance:
         type: 3}
       propertyPath: canHitDestroyableObjects
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
@@ -1059,7 +1074,7 @@ PrefabInstance:
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
       propertyPath: sightDistance
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
@@ -1228,6 +1243,11 @@ PrefabInstance:
       propertyPath: CurrentHp
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
 --- !u!4 &575144697 stripped
@@ -1340,6 +1360,21 @@ PrefabInstance:
     - target: {fileID: 4221300857950164, guid: 1a773db7544188641829a0a8d97643f0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831979030498196338, guid: 1a773db7544188641829a0a8d97643f0,
+        type: 3}
+      propertyPath: MaxHp
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 8831979030498196338, guid: 1a773db7544188641829a0a8d97643f0,
+        type: 3}
+      propertyPath: CurrentHp
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487028429824936362, guid: 1a773db7544188641829a0a8d97643f0,
+        type: 3}
+      propertyPath: sightDistance
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a773db7544188641829a0a8d97643f0, type: 3}
@@ -1637,7 +1672,7 @@ PrefabInstance:
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
       propertyPath: sightDistance
-      value: 8.9
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
@@ -1849,12 +1884,12 @@ PrefabInstance:
     - target: {fileID: 8831979030498196338, guid: 1a773db7544188641829a0a8d97643f0,
         type: 3}
       propertyPath: MaxHp
-      value: 45
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 8831979030498196338, guid: 1a773db7544188641829a0a8d97643f0,
         type: 3}
       propertyPath: CurrentHp
-      value: 45
+      value: 42
       objectReference: {fileID: 0}
     - target: {fileID: 5487028429824936362, guid: 1a773db7544188641829a0a8d97643f0,
         type: 3}
@@ -1880,6 +1915,11 @@ PrefabInstance:
         type: 3}
       propertyPath: AttackList.Array.data[2].damageCount
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487028429824936362, guid: 1a773db7544188641829a0a8d97643f0,
+        type: 3}
+      propertyPath: sightDistance
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a773db7544188641829a0a8d97643f0, type: 3}
@@ -2698,7 +2738,7 @@ PrefabInstance:
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
       propertyPath: sightDistance
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
@@ -2794,6 +2834,11 @@ PrefabInstance:
       propertyPath: CurrentHp
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
 --- !u!4 &1318512722 stripped
@@ -2876,7 +2921,7 @@ PrefabInstance:
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
       propertyPath: sightDistance
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
@@ -3295,6 +3340,11 @@ PrefabInstance:
         type: 3}
       propertyPath: CurrentHp
       value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
@@ -3715,6 +3765,11 @@ PrefabInstance:
       propertyPath: CurrentHp
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}
 --- !u!4 &1685083268 stripped
@@ -3987,12 +4042,12 @@ PrefabInstance:
     - target: {fileID: 8831979030498196338, guid: 1a773db7544188641829a0a8d97643f0,
         type: 3}
       propertyPath: MaxHp
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8831979030498196338, guid: 1a773db7544188641829a0a8d97643f0,
         type: 3}
       propertyPath: CurrentHp
-      value: 60
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5487028429824936362, guid: 1a773db7544188641829a0a8d97643f0,
         type: 3}
@@ -4033,6 +4088,11 @@ PrefabInstance:
         type: 3}
       propertyPath: AttackList.Array.data[2].damageCount
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5487028429824936362, guid: 1a773db7544188641829a0a8d97643f0,
+        type: 3}
+      propertyPath: sightDistance
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a773db7544188641829a0a8d97643f0, type: 3}
@@ -4116,7 +4176,7 @@ PrefabInstance:
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
       propertyPath: sightDistance
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
         type: 3}
@@ -4216,6 +4276,11 @@ PrefabInstance:
         type: 3}
       propertyPath: CurrentHp
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114862996046309558, guid: 7d5feb6af67f18d43974e399da3c03b1,
+        type: 3}
+      propertyPath: sightDistance
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d5feb6af67f18d43974e399da3c03b1, type: 3}

@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Threading;
 
-public class SimpleFSM:MonoBehaviour
+//仅用来巡逻
+public class SimpleFSM : MonoBehaviour
 {
     private Vector3[] positions;//巡逻点集合
     private int posIndex = 0;//当前巡逻的目的点编号
@@ -13,21 +14,22 @@ public class SimpleFSM:MonoBehaviour
 
     [HideInInspector]
     public bool isPatrol;//是否开始巡逻
-
-    private void Start()
+    void Start()
     {
         //第一次初始化巡逻点
         positions = new Vector3[4];
         InitializePatrolPoint();
+
+
     }
 
-    private void Update()
+    void Update()
     {
         //开始随机巡逻
         if (isPatrol)
         {
             timer += Time.deltaTime;
-            if (timer>= turnRate)
+            if (timer >= turnRate)
             {
                 posIndex = Random.Range(0, 4);
                 timer = 0;
@@ -41,9 +43,7 @@ public class SimpleFSM:MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 初始化巡逻点
-    /// </summary>
+    //初始化巡逻点
     void InitializePatrolPoint()
     {
         for (int i = 0; i < positions.Length; i++)
@@ -64,9 +64,7 @@ public class SimpleFSM:MonoBehaviour
         positions[3].z += PatrolDistance;
     }
 
-    /// <summary>
-    /// 巡逻
-    /// </summary>
+    //巡逻
     void Patrol()
     {
         //移动
@@ -81,6 +79,5 @@ public class SimpleFSM:MonoBehaviour
         {
             transform.eulerAngles = new Vector3(0, 180, 0);
         }
-
     }
 }
