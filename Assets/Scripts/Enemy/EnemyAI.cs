@@ -83,12 +83,14 @@ public class EnemyAI : EnemyAction, IDamagable<DamageObject>
             }
             else
             {
-                //玩家逃逸，停止追击，开启巡逻
-                targetSpotted = false;
-                fsm.isPatrol = true;
-
+                //玩家逃逸，停止追击，开启巡逻，并且需要是行走状态
+                if (enemyState==PLAYERSTATE.WALK)
+                {
+                    targetSpotted = false;
+                    fsm.isPatrol = true;
+                    playerAnimator.SetAnimatorFloat("MovementSpeed", 0.5f);
+                }
             }
-
         }
     }
 
